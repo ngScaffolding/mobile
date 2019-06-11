@@ -39,6 +39,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   entryComponents: [],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(),
     // CoreModule.forRoot(),
     JwtModule.forRoot({
