@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -25,6 +26,14 @@ import {
 } from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
+export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
+  return {
+    tokenGetter: () => {
+      return authQuery.getSnapshot().token;
+    }
+  };
+}
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -32,7 +41,13 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     BrowserModule,
     IonicModule.forRoot(),
     // CoreModule.forRoot(),
-
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [UserAuthenticationQuery]
+      }
+    }),
     AppRoutingModule
   ],
   providers: [
@@ -41,7 +56,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     // ngScaffolding-core
     { provide: ErrorHandler, useClass: CoreErrorHandlerService },
     // HTTP Token Interceptor
-    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
     // Allows use of Angular Elements

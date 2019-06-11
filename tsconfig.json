@@ -19,28 +19,7 @@
       "dom"
     ],
     "paths": {
-      "@angular/*": ["node_modules/@angular/*"],
-      "ngscaffolding-core": [
-        // "dist/ngscaffolding-core"
-        "../host/projects/ngscaffolding-core/src/public_api"
-      ],
-      "ngscaffolding-inputbuilder": [
-        // "dist/ngscaffolding-inputbuilder"
-        "projects/ngscaffolding-inputbuilder/src/public_api"
-
-      ],
-      "ngscaffolding-chart": [
-        "projects/ngscaffolding-chart/src/public_api"
-        // "dist/ngscaffolding-chart"
-      ],
-      "ngscaffolding-dashboard": [
-        "projects/ngscaffolding-dashboard/src/public_api"
-        // "dist/ngscaffolding-dashboard"
-      ],
-      "ngscaffolding-datagrid": [
-        // "dist/ngscaffolding-datagrid"
-        "projects/ngscaffolding-datagrid/src/public_api"
-      ]
+      "@angular/*": ["node_modules/@angular/*"]
     }
   }
 }
