@@ -4,7 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
-
+import { CUSTOM_IMPORTS } from '../custom/custom.app';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,6 +12,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+// Ionic Modules
+import { IonicStorageModule } from '@ionic/storage';
 
 import {
   CoreModule,
@@ -41,7 +44,8 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    // CoreModule.forRoot(),
+    CoreModule.forRoot(),
+    CUSTOM_IMPORTS,
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
@@ -49,16 +53,20 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
         deps: [UserAuthenticationQuery]
       }
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    TranslateModule.forRoot(),
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,
     SplashScreen,
     // ngScaffolding-core
+    AuthoriseRoleGuard,
     { provide: ErrorHandler, useClass: CoreErrorHandlerService },
     // HTTP Token Interceptor
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
   ],
     // Allows use of Angular Elements
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

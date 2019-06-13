@@ -1,25 +1,26 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthoriseRoleGuard } from 'ngscaffolding-core';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full', canActivate: [AuthoriseRoleGuard]
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: './home/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard]
   },
   {
     path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
+    loadChildren: './list/list.module#ListPageModule', canActivate: [AuthoriseRoleGuard]
   },
-  { path: 'logon', loadChildren: './logon/logon.module#LogonPageModule' },
+  { path: 'login', loadChildren: './logon/logon.module#LogonPageModule' },
   { path: 'logoff', loadChildren: './logoff/logoff.module#LogoffPageModule' },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' }
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule',canActivate: [AuthoriseRoleGuard] },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({
