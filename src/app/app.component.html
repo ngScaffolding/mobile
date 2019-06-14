@@ -3,20 +3,55 @@
     <ion-menu>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <ion-title>{{'Menu' | translate}}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
+          <div *ngFor="let menuItem of menuItems">
+ 
+              <!-- Standard Menu Item -->
+              <ion-menu-toggle *ngIf="menuItem.routerLink">
+                <ion-item [routerLink]="menuItem.routerLink" routerDirection="root" routerLinkActive="active">
+                  <ion-icon [name]="menuItem.icon" slot="start"></ion-icon>
+                  <ion-label>
+                    {{ menuItem.label }}
+                  </ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <!-- Item with Children -->
+         
+              <ion-item button *ngIf="menuItem.items?.length > 0" (click)="menuItem.expanded = !menuItem.expanded" [class.parent-active]="menuItem.expanded" detail="false">
+                <ion-icon slot="start" name="arrow-forward" *ngIf="!menuItem.expanded"></ion-icon>
+                <ion-icon slot="start" name="arrow-down" *ngIf="menuItem.expanded"></ion-icon>
+                <ion-label>{{ menuItem.label }}</ion-label>
+              </ion-item>
+         
+              <!-- Children List for clicked Item -->
+              <ion-list *ngIf="menuItem.expanded">
+                <ion-menu-toggle>
+                  <ion-item *ngFor="let sub of menuItem.items" class="sub-item" [routerLink]="sub.routerLink" routerDirection="root"
+                    routerLinkActive="active">
+                    <ion-icon [name]="sub.icon" slot="start"></ion-icon>
+                    <ion-label>
+                      {{ sub.title }}
+                    </ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+              </ion-list>
+         
+            </div>
+
+
+        <!-- <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+            <ion-item [routerDirection]="'root'" [routerLink]="[menuItem.routerLink]">
+              <ion-icon slot="start" [name]="menuItem.icon"></ion-icon>
               <ion-label>
-                {{p.title}}
+                {{menuItem.title}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
