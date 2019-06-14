@@ -13,20 +13,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+// Components
+import { MenuComponent } from './components/menu/menu.component';
+
+// Services
+import { NotificationService } from './services/notification/notification.service';
+
 // Ionic Modules
 import { IonicStorageModule } from '@ionic/storage';
 
-import {
-  CoreModule,
-  AuthoriseRoleGuard,
-  AppSettingsService,
-  UserAuthenticationBase,
-  UserAuthenticationService,
-  UserAuthenticationQuery,
-  CoreErrorHandlerService,
-  VersionsService,
-  MenuService
-} from 'ngscaffolding-core';
+import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService } from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
@@ -38,7 +34,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MenuComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -60,16 +56,17 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   providers: [
     StatusBar,
     SplashScreen,
+    NotificationService,
     // ngScaffolding-core
     AuthoriseRoleGuard,
     { provide: ErrorHandler, useClass: CoreErrorHandlerService },
     // HTTP Token Interceptor
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
+    { provide: UserAuthenticationBase, useClass: UserAuthenticationService }
   ],
-    // Allows use of Angular Elements
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  // Allows use of Angular Elements
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

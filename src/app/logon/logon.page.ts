@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggingService, AppSettingsQuery, AppSettingsService, NotificationService, SpinnerService, UserAuthenticationBase } from 'ngscaffolding-core';
+import { LoggingService, AppSettingsQuery, AppSettingsService, SpinnerService, UserAuthenticationBase } from 'ngscaffolding-core';
 import { Storage } from '@ionic/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppSettings } from '@ngscaffolding/models';
+import { NotificationService } from '../services/notification/notification.service';
 
 @Component({
   selector: 'app-logon',
@@ -20,6 +21,7 @@ export class LogonPage implements OnInit {
   inputModel: any = {};
 
   constructor(public appSettingsQuery: AppSettingsQuery,
+    private notification: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     public appSettings: AppSettingsService,
@@ -57,11 +59,11 @@ export class LogonPage implements OnInit {
     .subscribe(authUser => {
       this.router.navigate([this.returnUrl]);
     }, err =>{
-      // this.notificationService.showMessage({
-      //   summary: 'Logon Failed',
-      //   detail: 'Check you User Name and Password and try again',
-      //   severity: 'error'
-      // });
+      this.notification.showMessage({
+        summary: 'Logon Failed',
+        detail: 'Check you User Name and Password and try again',
+        severity: 'error'
+      });
       // this.spinnerService.hideSpinner();
     });
   }
