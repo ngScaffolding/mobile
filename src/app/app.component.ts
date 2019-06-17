@@ -13,7 +13,7 @@ import { CoreMenuItem } from '@ngscaffolding/models';
 })
 export class AppComponent {
   menuItems: Array<CoreMenuItem>;
-  
+
   public appPages = [
     {
       title: 'Home',
@@ -27,12 +27,7 @@ export class AppComponent {
     }
   ];
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private menuQuery: MenuQuery,
-  ) {
+  constructor(private platform: Platform, private splashScreen: SplashScreen, private statusBar: StatusBar, private menuQuery: MenuQuery) {
     this.initializeApp();
   }
 
@@ -42,9 +37,13 @@ export class AppComponent {
       this.splashScreen.hide();
 
       // Listen for menuItems
-      this.menuQuery.select(menuState => menuState.menuItems).subscribe(items => {
-        this.menuItems = items;
-      });
+      this.menuQuery
+        .select(menuState => menuState.menuItems)
+        .subscribe(items => {
+          if (items) {
+            this.menuItems = items;
+          }
+        });
     });
   }
 }

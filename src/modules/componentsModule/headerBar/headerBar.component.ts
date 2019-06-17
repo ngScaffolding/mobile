@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header-bar',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./headerBar.component.scss'],
 })
 export class HeaderBarComponent implements OnInit {
+
+  @Input()
+  public title: string;
 
   constructor() { }
 
