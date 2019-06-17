@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
-import { AppModule } from '../../app/app.module';
+import { ComponentsModule } from '../../modules/componentsModule/components.module';
 
 
 import {
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    AppModule,
+    ComponentsModule,
     RouterModule.forChild(appRoutes)
   ],
   declarations: [  ],

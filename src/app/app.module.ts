@@ -15,8 +15,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
+import { ComponentsModule } from '../modules/componentsModule/components.module';
 import { MenuComponent } from './components/menu/menu.component';
-import { HeaderBarComponent } from './components/headerBar/headerBar.component';
 
 // Services
 import { NotificationService } from './services/notification/notification.service';
@@ -36,11 +36,12 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 }
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, HeaderBarComponent],
+  declarations: [AppComponent, MenuComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
+    ComponentsModule,
     IonicModule.forRoot(),
     CoreModule.forRoot(),
     CUSTOM_IMPORTS,
