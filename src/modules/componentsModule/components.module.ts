@@ -10,6 +10,6 @@ import { HeaderBarComponent } from './headerBar/headerBar.component';
     IonicModule
   ],
   declarations: [ HeaderBarComponent ],
-  exports: []
+  exports: [ HeaderBarComponent ]
 })
 export class ComponentsModule {}

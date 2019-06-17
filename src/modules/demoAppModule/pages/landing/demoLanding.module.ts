@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { IonicModule } from '@ionic/angular';
-
+import { ComponentsModule } from '../../../componentsModule/components.module';
 import { DemoLandingComponent } from './demoLanding.component';
 
 const routes: Routes = [
@@ -18,6 +18,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
