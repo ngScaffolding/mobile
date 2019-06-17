@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from '@ngscaffolding/models';
+import { AppModule } from '../../app/app.module';
+
 
 import {
   AuthoriseRoleGuard,
@@ -15,15 +17,16 @@ import {
 } from 'ngscaffolding-core';
 
 const appRoutes: Routes = [
-  
+  { path: 'home', loadChildren: './pages/landing/demoLanding.module#DemoLandingPageModule', canActivate: [AuthoriseRoleGuard] },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    AppModule,
     RouterModule.forChild(appRoutes)
   ],
-  declarations: [],
+  declarations: [  ],
   exports: []
 })
 export class DemoAppModule {

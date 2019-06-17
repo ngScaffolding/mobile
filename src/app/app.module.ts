@@ -10,11 +10,13 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { AppSettings } from '@ngscaffolding/models';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
 import { MenuComponent } from './components/menu/menu.component';
+import { HeaderBarComponent } from './components/headerBar/headerBar.component';
 
 // Services
 import { NotificationService } from './services/notification/notification.service';
@@ -22,7 +24,7 @@ import { NotificationService } from './services/notification/notification.servic
 // Ionic Modules
 import { IonicStorageModule } from '@ionic/storage';
 
-import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService } from 'ngscaffolding-core';
+import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService, LoggingService } from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
@@ -34,7 +36,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 }
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent],
+  declarations: [AppComponent, MenuComponent, HeaderBarComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -69,4 +71,13 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(appSettingsService: AppSettingsService, logger: LoggingService, menuService: MenuService) {
+
+    logger.info('Setting Values', 'ngScaffolding-mobile startup');
+
+    appSettingsService.setValue(AppSettings.title, 'ngScaffolding Mobile');
+    appSettingsService.setValue(AppSettings.isMobile, true);
+
+  }
+}

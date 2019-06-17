@@ -27,7 +27,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "@ionic/storage": "^2.2.0",
-    "@ngscaffolding/models": "^1.0.137",
+    "@ngscaffolding/models": "^1.0.138",
     "@ngx-translate/core": "^11.0.1",
     "@webcomponents/custom-elements": "^1.2.4",
     "cordova-sqlite-storage": "3.2.0",

@@ -57,7 +57,7 @@ export class LogonPage implements OnInit {
 
     this.userAuthService.logon(this.inputModel.username, this.inputModel.password)
     .subscribe(authUser => {
-      this.router.navigate([this.returnUrl]);
+      this.router.navigate(['home']);
     }, err =>{
       this.notification.showMessage({
         summary: 'Logon Failed',

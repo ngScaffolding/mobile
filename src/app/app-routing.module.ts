@@ -8,14 +8,6 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full', canActivate: [AuthoriseRoleGuard]
   },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard]
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule', canActivate: [AuthoriseRoleGuard]
-  },
   { path: 'login', loadChildren: './logon/logon.module#LogonPageModule' },
   { path: 'logoff', loadChildren: './logoff/logoff.module#LogoffPageModule' },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule',canActivate: [AuthoriseRoleGuard] },
