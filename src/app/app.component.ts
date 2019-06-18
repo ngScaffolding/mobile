@@ -31,6 +31,10 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  expand(menuItem: CoreMenuItem) {
+    menuItem.expanded = !menuItem.expanded;
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -41,7 +45,8 @@ export class AppComponent {
         .select(menuState => menuState.menuItems)
         .subscribe(items => {
           if (items) {
-            this.menuItems = items;
+            this.menuItems = JSON.parse(JSON.stringify(items));
+            this.menuItems.forEach(menu => menu.expanded = false);
           }
         });
     });

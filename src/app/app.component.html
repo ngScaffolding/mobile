@@ -20,7 +20,7 @@
               </ion-menu-toggle>
               <!-- Item with Children -->
          
-              <ion-item button *ngIf="menuItem.items?.length > 0" (click)="menuItem.expanded = !menuItem.expanded" [class.parent-active]="menuItem.expanded" detail="false">
+              <ion-item button *ngIf="menuItem.items?.length > 0" (click)="expand(menuItem)" [class.parent-active]="menuItem.expanded" detail="false">
                 <ion-icon slot="start" name="arrow-forward" *ngIf="!menuItem.expanded"></ion-icon>
                 <ion-icon slot="start" name="arrow-down" *ngIf="menuItem.expanded"></ion-icon>
                 <ion-label>{{ menuItem.label }}</ion-label>
@@ -33,25 +33,12 @@
                     routerLinkActive="active">
                     <ion-icon [name]="sub.icon" slot="start"></ion-icon>
                     <ion-label>
-                      {{ sub.title }}
+                      {{ sub.label }}
                     </ion-label>
                   </ion-item>
                 </ion-menu-toggle>
               </ion-list>
-         
             </div>
-
-
-        <!-- <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[menuItem.routerLink]">
-              <ion-icon slot="start" [name]="menuItem.icon"></ion-icon>
-              <ion-label>
-                {{menuItem.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
