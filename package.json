@@ -33,9 +33,6 @@
     "cordova-sqlite-storage": "3.2.0",
     "core-js": "^2.5.4",
     "dateformat": "^3.0.3",
-    "ngscaffolding-core": "file:../host/projects/ngscaffolding-core",
-    "ngscaffolding-chart": "file:../host/projects/ngscaffolding-chart",
-    "ngscaffolding-inputbuilder": "file:../host/projects/ngscaffolding-inputbuilder",
     "rxjs": "^6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.29"

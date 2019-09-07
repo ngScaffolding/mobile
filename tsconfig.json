@@ -19,7 +19,13 @@
       "dom"
     ],
     "paths": {
-      "@angular/*": ["node_modules/@angular/*"]
+      "@angular/*": ["node_modules/@angular/*"],
+      "ngscaffolding-models": [
+        "projects/models/index"
+      ],
+      "ngscaffolding-core": [
+        "projects/core/public_api"
+      ]
     }
   }
 }
