@@ -26,6 +26,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService, LoggingService } from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { timeout } from 'q';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {
@@ -74,11 +75,17 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 })
 export class AppModule {
   constructor(appSettingsService: AppSettingsService, logger: LoggingService, menuService: MenuService) {
-
     logger.info('Setting Values', 'ngScaffolding-mobile startup');
 
     appSettingsService.setValue(AppSettings.title, 'ngScaffolding Mobile');
     appSettingsService.setValue(AppSettings.isMobile, true);
 
+    menuService.addMenuItemsFromCode([
+      {
+        label: 'Logoff',
+        icon: 'log-out',
+        routerLink: 'logoff'
+      }
+    ]);
   }
 }

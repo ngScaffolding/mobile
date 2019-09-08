@@ -1,6 +1,7 @@
-import { DemoAppModule } from '../modules/demoAppModule/demoappModule';
+import { FieldForceModule } from '../modules/fieldforceModule/fieldforceModule';
+
 
 export const CUSTOM_IMPORTS: any[] = [
-  DemoAppModule.forRoot()
+  FieldForceModule.forRoot()
 ];
 export const CUSTOM_COMPONENTS: any[] =  [];

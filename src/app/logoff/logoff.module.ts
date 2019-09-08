@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { LogoffPage } from './logoff.page';
 
+import { SharedModule } from '../app.shared.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LogoffPage]

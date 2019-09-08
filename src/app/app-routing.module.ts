@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   { path: 'login', loadChildren: './logon/logon.module#LogonPageModule' },
   { path: 'logoff', loadChildren: './logoff/logoff.module#LogoffPageModule' },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule',canActivate: [AuthoriseRoleGuard] },
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule', canActivate: [AuthoriseRoleGuard] }
 ];
