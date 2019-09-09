@@ -99,13 +99,13 @@ export class MenuService {
     // Is this existing?
     const existing = this.menuQuery.hasEntity(menuItem.name);
     if (existing) {
-      this.menuStore.createOrReplace(menuItem.name, menuItem);
+      this.menuStore.upsert(menuItem.name, menuItem);
     } else {
       // Add to reference list of menus
       this.menuStore.add(menuItem);
     }
 
-    const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+    const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getAll()));
     let parentMenu: CoreMenuItem;
     if (menuItem.parent) {
       parentMenu = existingMenus.find(menu => menu.name.toLowerCase() === menuItem.parent.toLowerCase());

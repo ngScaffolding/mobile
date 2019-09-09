@@ -82,9 +82,14 @@ export class AppModule {
 
     menuService.addMenuItemsFromCode([
       {
-        label: 'Logoff',
+        label: 'Logoff x',
         icon: 'log-out',
         routerLink: 'logoff'
+      },
+      {
+        label: 'About',
+        icon: 'information-circle-outline',
+        routerLink: 'about'
       }
     ]);
   }
