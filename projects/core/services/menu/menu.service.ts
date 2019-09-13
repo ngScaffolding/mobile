@@ -132,8 +132,8 @@ export class MenuService {
   private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
     const user = this.authQuery.getValue();
     let userRoles: string[] = [];
-    if (!user) {
-      userRoles = this.authQuery.getValue().userDetails.roles;
+    if (user && user.userDetails) {
+      userRoles = user.userDetails.roles;
     }
 
     const removingMenus: number[] = [];
