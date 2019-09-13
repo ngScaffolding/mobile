@@ -12,7 +12,7 @@
           <div text-center>
             <h3>{{'Login' | translate}}</h3>
           </div>
-          <div padding>
+          <div class="ion-padding">
             <ion-item>
               <ion-input  name="username" type="text" placeholder="User Name" [(ngModel)]="inputModel.username" required></ion-input>
             </ion-item>
@@ -25,10 +25,10 @@
               <ion-checkbox name="rememberMe" color="primary" slot="start" [(ngModel)]="rememberMe"></ion-checkbox>
             </ion-item>
 
-          <div padding>
+          <div class="ion-padding">
             <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">{{'Login' | translate}}</ion-button>
           </div>
-          <div padding *ngIf="appSettings.getBoolean('authShowRegister') | async">
+          <div class="ion-padding" *ngIf="appSettings.getBoolean('authShowRegister') | async">
             <ion-button color="secondary"  size="large" type="submit" [disabled]="form.invalid" expand="block">{{'Register' | translate}}</ion-button>
           </div>
         </ion-col>

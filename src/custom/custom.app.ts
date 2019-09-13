@@ -1,4 +1,4 @@
-import { FieldForceModule } from '../modules/fieldforceModule/fieldforceModule';
+import { FieldForceModule } from '../modules/fieldforce/fieldforce.module';
 
 
 export const CUSTOM_IMPORTS: any[] = [

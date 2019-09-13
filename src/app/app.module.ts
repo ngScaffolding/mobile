@@ -31,7 +31,7 @@ import { timeout } from 'q';
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {
     tokenGetter: () => {
-      return authQuery.getSnapshot().token;
+      return authQuery.getValue().token;
     }
   };
 }
@@ -82,14 +82,16 @@ export class AppModule {
 
     menuService.addMenuItemsFromCode([
       {
-        label: 'Logoff x',
+        label: 'Logoff',
         icon: 'log-out',
-        routerLink: 'logoff'
+        routerLink: 'logoff',
+        order: 950
       },
       {
         label: 'About',
         icon: 'information-circle-outline',
-        routerLink: 'about'
+        routerLink: 'about',
+        order: 900
       }
     ]);
   }

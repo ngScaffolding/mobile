@@ -30,15 +30,7 @@ export class MenuService {
   private httpInFlight = false;
   private menuDownloaded = false;
 
-  constructor(
-    private http: HttpClient,
-    private menuStore: MenuStore,
-    private menuQuery: MenuQuery,
-    private appSettingsQuery: AppSettingsQuery,
-    private authQuery: UserAuthenticationQuery,
-    private log: LoggingService,
-    public rolesService: RolesService
-  ) {
+  constructor(private http: HttpClient, private menuStore: MenuStore, private menuQuery: MenuQuery, private appSettingsQuery: AppSettingsQuery, private authQuery: UserAuthenticationQuery, private log: LoggingService, public rolesService: RolesService) {
     // Wait for settings, then load from server
     combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)]).subscribe(([authenticated, apiHome]) => {
       if (authenticated && apiHome && !this.menuDownloaded) {
@@ -54,7 +46,8 @@ export class MenuService {
     this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`, this.className);
 
     // Save for later use
-    this.menuItemsFromCode = [...this.menuItemsFromCode, ...menuItems];
+    this.addMenuItems(menuItems);
+    // this.menuItemsFromCode = [...this.menuItemsFromCode, ...menuItems];
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
@@ -66,7 +59,7 @@ export class MenuService {
           this.menuStore.remove(menuItem.name);
 
           // Remove from Tree
-          const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getSnapshot().menuItems));
+          const existingMenus = JSON.parse(JSON.stringify(this.menuQuery.getAll()));
           let parentMenu: CoreMenuItem;
           if (menuItem.parent) {
             parentMenu = existingMenus.find(menu => menu.name && menu.name.toLowerCase() === menuItem.parent.toLowerCase());
@@ -76,7 +69,7 @@ export class MenuService {
           parentMenu.items.splice(foundIndex, 1);
 
           // Update tree and tell the world
-          this.menuStore.updateRoot({ menuItems: existingMenus });
+          this.menuStore.update({ menuItems: existingMenus });
           observer.next();
           observer.complete();
         },
@@ -89,7 +82,7 @@ export class MenuService {
 
   public saveMenuItem(menuItem: CoreMenuItem, updateMenuTree: boolean = true) {
     this.http.post<CoreMenuItem>(this.apiHome + '/api/v1/menuitems', menuItem).subscribe(savedMenuItem => {
-      if(updateMenuTree){
+      if (updateMenuTree) {
         this.updateExistingMenuItem(savedMenuItem);
       }
     });
@@ -122,14 +115,14 @@ export class MenuService {
     }
 
     // Update tree and tell the world
-    this.menuStore.updateRoot({ menuItems: existingMenus });
+    this.menuStore.update({ menuItems: existingMenus });
   }
 
   // Iterative Call
   private addMenuItemsToReferenceList(menuItems: CoreMenuItem[]): void {
     menuItems.forEach(menuItem => {
       // Add to Entity Store
-      this.menuStore.createOrReplace(menuItem.name, menuItem);
+      this.menuStore.upsert(menuItem.name, menuItem);
       if (menuItem.items && Array.isArray(menuItem.items)) {
         this.addMenuItemsToReferenceList(menuItem.items as Array<CoreMenuItem>);
       }
@@ -137,7 +130,12 @@ export class MenuService {
   }
 
   private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
-    const userRoles = this.authQuery.getSnapshot().userDetails.roles;
+    const user = this.authQuery.getValue();
+    let userRoles: string[] = [];
+    if (!user) {
+      userRoles = this.authQuery.getValue().userDetails.roles;
+    }
+
     const removingMenus: number[] = [];
 
     menuItems.forEach(menuItem => {
@@ -145,8 +143,7 @@ export class MenuService {
 
       // Is this role protected
       if (menuItem.roles && menuItem.roles.length > 0) {
-        if (userRoles && menuItem.roles
-            .filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
+        if (userRoles && menuItem.roles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
           removingMenus.push(menuItems.indexOf(menuItem));
@@ -168,12 +165,18 @@ export class MenuService {
 
     const newMenuItems: CoreMenuItem[] = [];
 
-    // First Add Menu Items Added from Code
-    if (this.menuItemsFromCode) {
-      this.menuItemsFromCode.forEach(menuItemFromCode => {
-        this.addNewMenuItemToEntities(newMenuItems, menuItemFromCode);
-      });
-    }
+    // // First Add Menu Items Added from Code
+    // if (this.menuItemsFromCode) {
+    //   const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
+    //       this.removeUnauthorisedMenuItems(clonedFromCode);
+
+    //       // Add to flat reference List
+    //       this.addMenuItemsToReferenceList(clonedFromCode);
+
+    //       clonedFromCode.forEach(loopMenuItem => {
+    //         this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
+    //       });
+    // }
 
     this.http
       .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
@@ -188,35 +191,33 @@ export class MenuService {
         downloadedMenuItems => {
           this.log.info(`Downloaded MenuItems`, this.className);
           this.menuDownloaded = true;
-          this.menuItems = [ ...this.menuItems ];
 
-          const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
-          this.removeUnauthorisedMenuItems(clonedFromCode);
-
-          // Add to flat reference List
-          this.addMenuItemsToReferenceList(clonedFromCode);
-
-          clonedFromCode.forEach(loopMenuItem => {
-            this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
-          });
-
-          // Add to flat reference List
-          this.addMenuItemsToReferenceList(downloadedMenuItems);
-
-          downloadedMenuItems.forEach(loopMenuItem => {
-            this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
-          });
-
-          newMenuItems.forEach(newMenuItem => {
-            this.menuItems.push(newMenuItem);
-          });
-
-          this.menuStore.updateRoot({ menuItems: this.menuItems });
+          this.addMenuItems(downloadedMenuItems);
         },
         err => {
-          this.menuStore.setError('Failed to download Menu');
+          this.log.error('Failed to download Menu', this.className);
         }
       );
+  }
+
+  public addMenuItems(newMenuItems: CoreMenuItem[]) {
+    this.menuItems = [...this.menuItems];
+
+    // Remove the unatuhorised
+    this.removeUnauthorisedMenuItems(newMenuItems);
+
+    // Add to flat reference List
+    this.addMenuItemsToReferenceList(newMenuItems);
+
+    newMenuItems.forEach(loopMenuItem => {
+      this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
+    });
+
+    newMenuItems.forEach(newMenuItem => {
+      this.menuItems.push(newMenuItem);
+    });
+
+    this.menuStore.update({ menuItems: this.menuItems });
   }
 
   public addRoute(route: Route, roles: string[] = null) {

@@ -14,7 +14,7 @@
                 <ion-item [routerLink]="menuItem.routerLink" routerDirection="root" routerLinkActive="active">
                   <ion-icon [name]="menuItem.icon" slot="start"></ion-icon>
                   <ion-label>
-                    {{ menuItem.label }}
+                    {{ menuItem.label | translate}}
                   </ion-label>
                 </ion-item>
               </ion-menu-toggle>
@@ -23,7 +23,7 @@
               <ion-item button *ngIf="menuItem.items?.length > 0" (click)="expand(menuItem)" [class.parent-active]="menuItem.expanded" detail="false">
                 <ion-icon slot="start" name="arrow-forward" *ngIf="!menuItem.expanded"></ion-icon>
                 <ion-icon slot="start" name="arrow-down" *ngIf="menuItem.expanded"></ion-icon>
-                <ion-label>{{ menuItem.label }}</ion-label>
+                <ion-label>{{ menuItem.label | translate}}</ion-label>
               </ion-item>
          
               <!-- Children List for clicked Item -->
@@ -33,7 +33,7 @@
                     routerLinkActive="active">
                     <ion-icon [name]="sub.icon" slot="start"></ion-icon>
                     <ion-label>
-                      {{ sub.label }}
+                      {{ sub.label | translate}}
                     </ion-label>
                   </ion-item>
                 </ion-menu-toggle>
