@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-back-button defaultHref="/"></ion-back-button>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>
-      {{'Send Update' | translate}}
+      {{ 'Send Update' | translate }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -19,21 +19,31 @@
       <p>{{ 'Update the office with your status below' | translate }}</p>
     </ion-card-content>
   </ion-card>
-  <ion-list lines="none">
-    <ion-list-header>
-      <ion-label><h2>{{ 'Options' | translate }}</h2></ion-label>
-    </ion-list-header>
-  </ion-list>
   <div class="ion-padding">
-    <ion-button size="large" type="submit" expand="block" color="primary">
-        <ion-icon slot="start" name="mail"></ion-icon>
-        {{ 'Send Work Update' | translate }}
-      </ion-button>
+    </div><div class="ion-padding">
+      </div>
+  <!-- <ion-item>
+    <ion-select interface="popover">
+      <ion-select-option *ngFor="let code of notificationCodes.OptionListItems">NES</ion-select-option>
+    </ion-select>
+  </ion-item> -->
+  <div *ngIf="notifications$ | async as notifications">
+      <ion-item>
+      <ion-label  position="floating">{{ 'Status' | translate }}</ion-label>
+
+  <ion-select [(ngModel)]="notificationStatus" interface="popover">
+      <ion-select-option *ngFor="let notification of notifications.referenceValueItems" [value]="notification.value">{{notification.display}}
+      </ion-select-option>
+  </ion-select>
+      </ion-item>
+  </div>
+
+  <div class="ion-padding">
   </div>
   <div class="ion-padding">
-      <ion-button size="large" type="submit" expand="block" color="secondary">
-          <ion-icon slot="start" name="build"></ion-icon>
-          {{ 'Work Items' | translate }}
-        </ion-button>
-    </div>
+    <ion-button (click)="sendUpdate()" [disabled]="!notificationStatus" size="large" type="submit" expand="block" color="primary">
+      <ion-icon slot="start" name="send"></ion-icon>
+      {{ 'Send Status' | translate }}
+    </ion-button>
+  </div>
 </ion-content>

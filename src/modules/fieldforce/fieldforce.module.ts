@@ -15,6 +15,8 @@ import {
   LoggingService, ReferenceValuesService,
   VersionsService
 } from 'ngscaffolding-core';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Network } from '@ionic-native/network/ngx';
 
 const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard] },
@@ -28,7 +30,11 @@ const appRoutes: Routes = [
     RouterModule.forChild(appRoutes)
   ],
   declarations: [  ],
-  exports: []
+  exports: [],
+  providers:[
+    Geolocation,
+    Network
+  ]
 })
 export class FieldForceModule {
   static forRoot(): ModuleWithProviders {
@@ -44,7 +50,7 @@ export class FieldForceModule {
     referenceValuesService: ReferenceValuesService,
     versions: VersionsService
   ) {
-    logger.info('Setting Values', 'demoApp.startup');
+    logger.info('Setting Values', 'FieldForceApp.startup');
 
     versions.addVersion('fieldforceMobile', VERSION.version, true);
 
