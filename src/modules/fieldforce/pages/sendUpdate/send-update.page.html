@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+    <ion-title>
+      {{'Send Update' | translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="welcome-card">
+    <ion-card-header>
+      <ion-card-subtitle>{{ 'How are getting on?' | translate }}</ion-card-subtitle>
+      <ion-card-title>{{ 'Send Update' | translate }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ 'Update the office with your status below' | translate }}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-list lines="none">
+    <ion-list-header>
+      <ion-label><h2>{{ 'Options' | translate }}</h2></ion-label>
+    </ion-list-header>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button size="large" type="submit" expand="block" color="primary">
+        <ion-icon slot="start" name="mail"></ion-icon>
+        {{ 'Send Work Update' | translate }}
+      </ion-button>
+  </div>
+  <div class="ion-padding">
+      <ion-button size="large" type="submit" expand="block" color="secondary">
+          <ion-icon slot="start" name="build"></ion-icon>
+          {{ 'Work Items' | translate }}
+        </ion-button>
+    </div>
+</ion-content>
