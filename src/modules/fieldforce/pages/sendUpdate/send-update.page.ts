@@ -5,6 +5,8 @@ import { ReferenceValue } from 'ngscaffolding-models';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { StatusUpdate } from '../../models';
 import { StatusUpdatesService } from '../../services/statusUpdates/statusUpdates.service';
+import { ToastController, NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'send-update.page.html',
@@ -15,7 +17,15 @@ export class SendUpdatePage {
 
   notificationStatus: any;
 
-  constructor(refValuesService: ReferenceValuesService, private geolocation: Geolocation, private authQuery: UserAuthenticationQuery, private statusUpdateService: StatusUpdatesService) {
+  constructor(
+    private navCtrl: NavController,
+    private refValuesService: ReferenceValuesService,
+    private geolocation: Geolocation,
+    private authQuery: UserAuthenticationQuery,
+    private toastController: ToastController,
+    private translate: TranslateService,
+    private statusUpdateService: StatusUpdatesService
+  ) {
     this.notifications$ = refValuesService.getReferenceValue('FieldForce.NotificationCodes.Reference');
   }
 
@@ -35,11 +45,24 @@ export class SendUpdatePage {
         update.Accuracy = resp.coords.accuracy;
 
         this.statusUpdateService.sendUpdate(update);
+        this.messageSent();
       })
       .catch(error => {
         console.log('Error getting location', error);
 
         this.statusUpdateService.sendUpdate(update);
+        this.messageSent();
       });
+  }
+
+  async messageSent() {
+    const toast = await this.toastController.create({
+      message: this.translate.instant('Status Update Sent'),
+      duration: 2000
+    });
+    toast.present();
+    setTimeout(_ => {
+      this.navCtrl.back();
+    }, 1000);
   }
 }

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'WorkItem Detail' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="workItem">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ 'WorkItem Detail' | translate }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <h2>Work Order Number</h2>
+              <h3>{{ workItem.WorkOrderNo }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Date Planned</h2>
+              <h3>{{ workItem.DatePlanned | date }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Survey Comment</h2>
+              <h3>{{ workItem.SurveyComment }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Status</h2>
+              <h3>{{ workItem.WorkItemStatusCodeID | lookup: 'FieldForce.StatusCodes.Reference' | async }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Client</h2>
+              <h3>{{ workItem.ClientID | lookup: 'FieldForce.Clients.Reference' | async }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Priority</h2>
+              <h3>{{ workItem.WorkItemPriorityID | lookup: 'FieldForce.Priorities.Reference' | async }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Type</h2>
+              <h3>{{ workItem.WorkItemTypeID | lookup: 'FieldForce.WorkItems.Types' | async }}</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Subtype</h2>
+              <h3>{{ workItem.WorkItemSubTypeID | lookup: 'FieldForce.WorkItems.SubTypes' | async }}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <div class="ion-padding"></div>
+        <div *ngIf="updateStages$ | async as updateStages">
+          <ion-item>
+            <ion-label position="floating">{{ 'Status' | translate }}</ion-label>
+
+            <ion-select [(ngModel)]="updateStatus" (ionChange)="statusChanged()" interface="popover">
+              <ion-select-option *ngFor="let notification of updateStages.referenceValueItems" [value]="notification.value">{{ notification.display }} </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding"></div>
+          <ion-item *ngIf="updateCodes">
+            <ion-label position="floating">{{ 'Update Code' | translate }}</ion-label>
+
+            <ion-select [(ngModel)]="updateStatus2" interface="popover">
+              <ion-select-option *ngFor="let notification of updateCodes" [value]="notification.value">{{ notification.display }} </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button (click)="sendUpdate()" routerDirection="forward" type="submit" expand="block" color="primary">
+            <ion-icon slot="start" name="send"></ion-icon>
+            {{ 'Send Update' | translate }}
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -17,23 +17,24 @@
     </ion-card-header>
     <ion-card-content>
       <p>{{ 'Welcome to FieldForce start working below' | translate }}</p>
-    </ion-card-content>
-  </ion-card>
-  <ion-list lines="none">
-    <ion-list-header>
-      <ion-label><h2>{{ 'Options' | translate }}</h2></ion-label>
-    </ion-list-header>
-  </ion-list>
-  <div class="ion-padding">
-    <ion-button size="large" type="submit" expand="block" color="primary" [routerLink]="['/sendupdate']">
-        <ion-icon slot="start" name="mail"></ion-icon>
-        {{ 'Send Work Update' | translate }}
-      </ion-button>
-  </div>
-  <div class="ion-padding">
-      <ion-button size="large" type="submit" expand="block" color="secondary" [routerLink]="['/detail']">
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-label><h2>{{ 'Options' | translate }}</h2></ion-label>
+        </ion-list-header>
+      </ion-list>
+      <div class="ion-padding">
+        <ion-button size="large" type="submit" expand="block" color="primary" [routerLink]="['/sendupdate']" routerDirection="forward">
+          <ion-icon slot="start" name="mail"></ion-icon>
+          {{ 'Send Work Update' | translate }}
+        </ion-button>
+      </div>
+      <div class="ion-padding">
+        <ion-button size="large" type="submit" expand="block" color="secondary" [routerLink]="['/workitems']" routerDirection="forward">
           <ion-icon slot="start" name="build"></ion-icon>
           {{ 'Work Items' | translate }}
         </ion-button>
-    </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
