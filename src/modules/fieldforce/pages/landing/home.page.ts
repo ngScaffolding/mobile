@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StatusUpdatesService } from '../../services/statusUpdates/statusUpdates.service';
 import { NetworkService } from 'src/app/services/network/network.service';
+import { WorkItemsService } from '../../services/workItems/workItems.service';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,6 @@ import { NetworkService } from 'src/app/services/network/network.service';
 })
 export class HomePage {
 
-  constructor(private statusUpdatesService: StatusUpdatesService, private networkService: NetworkService) {}
+  constructor(private statusUpdatesService: StatusUpdatesService, private networkService: NetworkService, private workItemsService: WorkItemsService) {}
 
 }

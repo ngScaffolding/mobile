@@ -14,6 +14,8 @@ import { AppSettings } from '@ngscaffolding/models';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { SuperTabsModule } from '@ionic-super-tabs/angular'
+
 // Components
 import { ComponentsModule } from '../modules/componentsModule/components.module';
 import { MenuComponent } from './components/menu/menu.component';
@@ -46,6 +48,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     IonicModule.forRoot(),
     CoreModule.forRoot(),
     CUSTOM_IMPORTS,
+    SuperTabsModule.forRoot(),
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { StatusUpdatesStore } from './statusUpdates.store';
+import { StatusUpdatesStore } from '../../stores/statusUpdates.store';
 import { NetworkQuery } from 'src/app/services/network/network.query';
 import { StatusUpdate } from '../../models';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsService } from 'ngscaffolding-core';
 import { AppSettings } from 'ngscaffolding-models';
-import { StatusUpdatesQuery } from './statusUpdates.query';
+import { StatusUpdatesQuery } from '../../stores/statusUpdates.query';
 
 @Injectable({ providedIn: 'root' })
 export class StatusUpdatesService {
