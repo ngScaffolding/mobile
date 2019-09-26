@@ -15,7 +15,7 @@ export class StatusUpdatesService {
     setInterval(_ => {
       if (networkQuery.isConnectedNow()) {
         if (statusUpdatesQuery.getCount() > 0) {
-          let updates = statusUpdatesQuery.getAll();
+          const updates = statusUpdatesQuery.getAll();
           for (const update of updates) {
             this.http.post(this.appSettingsService.getValue(AppSettings.apiHome) + '/api/v1/statusupdates', update).subscribe(
               data => {
