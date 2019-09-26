@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { StatusUpdatesStore } from './statusUpdates.store';
+import { StatusUpdatesStore } from '../../stores/statusUpdates.store';
 import { NetworkQuery } from 'src/app/services/network/network.query';
 import { StatusUpdate } from '../../models';
 import { HttpClient } from '@angular/common/http';
 import { AppSettingsService } from 'ngscaffolding-core';
 import { AppSettings } from 'ngscaffolding-models';
-import { StatusUpdatesQuery } from './statusUpdates.query';
+import { StatusUpdatesQuery } from '../../stores/statusUpdates.query';
 
 @Injectable({ providedIn: 'root' })
 export class StatusUpdatesService {
@@ -15,7 +15,7 @@ export class StatusUpdatesService {
     setInterval(_ => {
       if (networkQuery.isConnectedNow()) {
         if (statusUpdatesQuery.getCount() > 0) {
-          let updates = statusUpdatesQuery.getAll();
+          const updates = statusUpdatesQuery.getAll();
           for (const update of updates) {
             this.http.post(this.appSettingsService.getValue(AppSettings.apiHome) + '/api/v1/statusupdates', update).subscribe(
               data => {
