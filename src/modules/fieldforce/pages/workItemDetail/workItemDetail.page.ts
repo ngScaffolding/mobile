@@ -5,18 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { ReferenceValue, ReferenceValueItem } from 'ngscaffolding-models';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { StatusUpdatesService } from '../../services/statusUpdates/statusUpdates.service';
-import { ToastController, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { WorkItemsQuery } from '../../services/workItems/workItems.query';
 import { WorkItem } from '../../models';
 import { WorkItemsService } from '../../services/workItems/workItems.service';
+import { NotificationService } from '../../../../app/services/notification/notification.service';
 
 @Component({
   templateUrl: 'workItemDetail.page.html',
   styleUrls: ['workItemDetail.page.scss']
 })
 export class WorkItemDetailPage implements OnInit {
-
   workItem: WorkItem;
 
   updateStages$: Observable<ReferenceValue>;
@@ -24,6 +24,13 @@ export class WorkItemDetailPage implements OnInit {
   updateCodes: ReferenceValueItem[];
   updateStatus: any;
   updateStatus2: any;
+  updateComment: string;
+
+  filterValue: string;
+  selectedAsset: string;
+
+  shippedAssetsFull: ReferenceValueItem[];
+  shippedAssets: ReferenceValueItem[];
 
   ngOnInit(): void {
     this.workItem = this.workItemsQuery.getEntity(this.route.snapshot.params.id);
@@ -31,18 +38,49 @@ export class WorkItemDetailPage implements OnInit {
     this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
       this.fullUpdateCodes = refVal.referenceValueItems;
     });
+
+    this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
+      this.shippedAssetsFull = refVal.referenceValueItems;
+      this.shippedAssets = refVal.referenceValueItems;
+    });
   }
 
-  statusChanged($event: any){
+  statusChanged($event: any) {
     // tslint:disable-next-line: triple-equals
     this.updateStatus2 = null;
     this.updateCodes = this.fullUpdateCodes.filter(c => c.subtitle == this.updateStatus);
   }
-  sendUpdate(){
-    this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2);
+
+  sendUpdate() {
+    this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2, this.updateComment);
+
+    setTimeout(_ => {
+      this.notification.showMessage({
+        summary: 'Update',
+        detail: 'Update Details Sent',
+        severity: 'success'
+      });
+    }, 1000);
+  }
+
+  sendAsset() {
+    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, {AssetTag: this.selectedAsset});
+
+        setTimeout(_ => {
+      this.notification.showMessage({
+        summary: 'Asset Update',
+        detail: 'Asset Details Sent',
+        severity: 'success'
+      });
+    }, 1000);
+  }
+
+  updateFilter(filterValue: string) {
+    this.shippedAssets = this.shippedAssetsFull.filter(asset => asset.value.toUpperCase().startsWith(this.filterValue.toUpperCase()));
   }
 
   constructor(
+    private notification: NotificationService,
     private refValuesService: ReferenceValuesService,
     private route: ActivatedRoute,
     private workItemsQuery: WorkItemsQuery,
@@ -50,10 +88,7 @@ export class WorkItemDetailPage implements OnInit {
     private navCtrl: NavController,
     private geolocation: Geolocation,
     private authQuery: UserAuthenticationQuery,
-    private toastController: ToastController,
     private translate: TranslateService,
     private statusUpdateService: StatusUpdatesService
-  ) {
-  }
-
+  ) {}
 }
