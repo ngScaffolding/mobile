@@ -14,7 +14,7 @@ import { AppSettings } from '@ngscaffolding/models';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SuperTabsModule } from '@ionic-super-tabs/angular'
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 // Components
 import { ComponentsModule } from '../modules/componentsModule/components.module';
