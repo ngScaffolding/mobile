@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { enableAkitaProdMode, persistState } from '@datorama/akita';
+import { enableAkitaProdMode, persistState, akitaConfig } from '@datorama/akita';
 import { debounceTime } from 'rxjs/operators';
 
 if (environment.production) {
@@ -11,8 +11,12 @@ if (environment.production) {
   enableAkitaProdMode();
 }
 
+akitaConfig({
+  resettable: true
+});
+
 persistState({
-  preStorageUpdateOperator: () => debounceTime(500)}
+  preStorageUpdateOperator: () => debounceTime(10)}
 );
 
 platformBrowserDynamic().bootstrapModule(AppModule)

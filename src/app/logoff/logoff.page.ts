@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthenticationBase, LoggingService } from 'ngscaffolding-core';
 import { Router } from '@angular/router';
+import { resetStores } from '@datorama/akita';
 
 @Component({
   selector: 'app-logoff',
@@ -12,6 +13,10 @@ export class LogoffPage implements OnInit {
 
   ngOnInit() {
     this.userAuthService.logoff();
+
+    // Clear Akita Stores
+    resetStores({ exclude: ['appSettings'] });
+
     setTimeout(() => {
       this.router.navigateByUrl('/login');
     }, 5000);
