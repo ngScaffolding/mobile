@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../app/app.shared.module';
 import { WorkItemDetailPage } from './WorkItemDetail.page';
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { WorkItemDetailPage } from './WorkItemDetail.page';
     FormsModule,
     IonicModule,
     SharedModule,
+    SuperTabsModule,
     RouterModule.forChild([
       {
         path: '',
