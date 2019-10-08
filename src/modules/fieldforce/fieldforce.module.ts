@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 import { ComponentsModule } from '../../modules/componentsModule/components.module';
 
 import { AuthoriseRoleGuard, AppSettingsService, MenuService, LoggingService, ReferenceValuesService, VersionsService } from 'ngscaffolding-core';
@@ -14,8 +14,8 @@ import { Network } from '@ionic-native/network/ngx';
 const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'sendupdate', loadChildren: './pages/sendUpdate/send-update.module#SendUpdatePageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitemdetail/:id', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] }
+  { path: 'workitemdetail/:id', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({
@@ -39,8 +39,11 @@ export class FieldForceModule {
     appSettingsService.setValue(AppSettings.title, 'FieldForce');
     appSettingsService.setValue(AppSettings.iconUrl, '');
 
-    appSettingsService.setValue(AppSettings.apiHome, 'http://localhost:3000');
-    appSettingsService.setValue(AppSettings.apiAuth, 'http://localhost:3010');
+    appSettingsService.setValue(AppSettings.apiHome, 'https://tesamm-api.azurewebsites.net');
+    appSettingsService.setValue(AppSettings.apiAuth, 'https://tesamm-oauth.azurewebsites.net');
+
+    // appSettingsService.setValue(AppSettings.apiHome, 'http://localhost:3000');
+    // appSettingsService.setValue(AppSettings.apiAuth, 'http://localhost:3010');
 
     appSettingsService.setValue(AppSettings.authTokenEndpoint, '/auth/token');
     appSettingsService.setValue(AppSettings.errorLogConsole, true);
@@ -54,6 +57,9 @@ export class FieldForceModule {
 
     appSettingsService.setValue(AppSettings.showProfileSetting, true);
     appSettingsService.setValue(AppSettings.showProfilePicture, true);
+
+    appSettingsService.setValue(AppSettings.dateTimeFormat, 'dd/mm/yyyy HH:MM TT');
+    appSettingsService.setValue(AppSettings.dateFormat, 'dd/mm/yyyy');
 
     appSettingsService.setValue(AppSettings.authClientId, 'democlient');
     appSettingsService.setValue(AppSettings.authClientSecret, 'secret');

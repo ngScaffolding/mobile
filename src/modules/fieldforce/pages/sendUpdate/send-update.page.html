@@ -20,7 +20,7 @@
   <div class="ion-padding"></div>
   <div *ngIf="notifications$ | async as notifications">
     <ion-item>
-      <ion-label position="floating">{{ 'Status' | translate }}</ion-label>
+      <ion-label position="floating">{{ 'Engineer Update' | translate }}</ion-label>
 
       <ion-select [(ngModel)]="notificationStatus" interface="popover">
         <ion-select-option *ngFor="let notification of notifications.referenceValueItems" [value]="notification.value">{{ notification.display }} </ion-select-option>

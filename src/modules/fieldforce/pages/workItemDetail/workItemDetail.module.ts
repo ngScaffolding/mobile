@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../app/app.shared.module';
-import { WorkItemDetailPage } from './WorkItemDetail.page';
+import { WorkItemDetailPage } from './workItemDetail.page';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
