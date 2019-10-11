@@ -16,9 +16,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
-// Components
+// Modules
 import { ComponentsModule } from '../modules/componentsModule/components.module';
 import { MenuComponent } from './components/menu/menu.component';
+import { UserModule } from '../modules/userModule/user.module';
 
 // Services
 import { NotificationService } from './services/notification/notification.service';
@@ -57,6 +58,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
       }
     }),
     AppRoutingModule,
+    UserModule,
     TranslateModule.forRoot(),
     IonicStorageModule.forRoot()
   ],

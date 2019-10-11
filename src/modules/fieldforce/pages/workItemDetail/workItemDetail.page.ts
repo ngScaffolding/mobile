@@ -56,7 +56,7 @@ export class WorkItemDetailPage implements OnInit {
         detail: 'Update Details Sent',
         severity: 'success'
       });
-    }, 1000);
+    }, 500);
   }
 
   sendAsset() {
@@ -68,7 +68,7 @@ export class WorkItemDetailPage implements OnInit {
         detail: 'Asset Details Sent',
         severity: 'success'
       });
-    }, 1000);
+    }, 500);
   }
 
   updateFilter(filterValue: string) {
