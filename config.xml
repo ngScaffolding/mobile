@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget android-versionCode="11" id="com.essoft.fieldforcemobile" ios-CFBundleVersion="1.0.25" version="1.0.25" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>FieldForce Mobile</name>
+    <description>FieldForce Mobile Application</description>
+    <author email="dbaines@es-soft.net" href="http://www.es-soft.net/">elegant Solutions</author>
     <content src="index.html" />
-    <access origin="*" />
+    <access origin="http://*.es-soft.net" requires-forward-secrecy="false" />
+    <access allows-arbitrary-loads-in-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" origin="*" requires-forward-secrecy="false" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

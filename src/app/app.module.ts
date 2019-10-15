@@ -14,7 +14,7 @@ import { AppSettings } from '@ngscaffolding/models';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SuperTabsModule } from '@ionic-super-tabs/angular'
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 // Components
 import { ComponentsModule } from '../modules/componentsModule/components.module';
@@ -28,7 +28,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService, LoggingService } from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { timeout } from 'q';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   return {
@@ -69,6 +69,8 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     { provide: ErrorHandler, useClass: CoreErrorHandlerService },
     // HTTP Token Interceptor
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    // Here for browser use only
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: UserAuthenticationBase, useClass: UserAuthenticationService }
   ],
