@@ -40,15 +40,6 @@ export class ReferenceValuesService {
     });
   }
 
-  // Clear all Reference values with this name
-  clearReferenceValue(name: string) {
-    const list = this.refValuesQuery.getAll({filterBy: entity => entity.name === name});
-
-    for (const refValue of list) {
-          this.refValuesStore.remove(refValue);
-      }
-  }
-
   setReferenceValue(referenceValue: ReferenceValue) {
     referenceValue.compositeKey = this.getKey(referenceValue.name, '');
     this.refValuesStore.upsert(this.getKey(referenceValue.name, ''), referenceValue);
