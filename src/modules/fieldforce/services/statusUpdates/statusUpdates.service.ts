@@ -34,7 +34,7 @@ export class StatusUpdatesService {
         for (const update of updates) {
           this.http.post(this.appSettingsService.getValue(AppSettings.apiHome) + '/api/v1/statusupdates', update).subscribe(
             data => {
-              this.log.info(`Status Update Sucessfully sent`, update);
+              this.log.info(`Status Update Sucessfully sent`);
               this.statusUpdatesStore.remove(update.NotificationID);
             },
             err => {

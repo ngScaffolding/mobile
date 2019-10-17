@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -51,6 +51,8 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     }
   };
 }
+
+
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],

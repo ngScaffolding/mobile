@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig, Store } from '@datorama/akita';
-import { WorkItem } from '../models';
-import { create } from 'domain';
-
-
-@Injectable({ providedIn: 'root' })
+import { StoreConfig, Store } from '@datorama/akita';
 
 
 export interface ApplicationState {
