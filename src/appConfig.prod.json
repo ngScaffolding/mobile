@@ -1,4 +1,5 @@
 {
   "apiHome": "https://tesamm-api.azurewebsites.net",
-  "apiAuth": "https://tesamm-oauth.azurewebsites.net"
+  "apiAuth": "https://tesamm-oauth.azurewebsites.net",
+  "isMobile": true
 }
