@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CUSTOM_IMPORTS } from '../custom/custom.app';
+import { appInitialisers } from '../custom/custom.init';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -26,8 +27,20 @@ import { NotificationService } from './services/notification/notification.servic
 
 // Ionic Modules
 import { IonicStorageModule } from '@ionic/storage';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
-import { CoreModule, AuthoriseRoleGuard, AppSettingsService, UserAuthenticationBase, UserAuthenticationService, UserAuthenticationQuery, CoreErrorHandlerService, VersionsService, MenuService, LoggingService } from 'ngscaffolding-core';
+import {
+  CoreModule,
+  AuthoriseRoleGuard,
+  AppSettingsService,
+  UserAuthenticationBase,
+  UserAuthenticationService,
+  UserAuthenticationQuery,
+  CoreErrorHandlerService,
+  VersionsService,
+  MenuService,
+  LoggingService
+} from 'ngscaffolding-core';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -65,6 +78,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
   providers: [
     StatusBar,
     SplashScreen,
+    ScreenOrientation,
     NotificationService,
     // ngScaffolding-core
     AuthoriseRoleGuard,
@@ -74,7 +88,9 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     // Here for browser use only
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: UserAuthenticationBase, useClass: UserAuthenticationService }
+    { provide: UserAuthenticationBase, useClass: UserAuthenticationService },
+    // Custom Initialisers
+    ...appInitialisers
   ],
   // Allows use of Angular Elements
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

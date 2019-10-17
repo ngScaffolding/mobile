@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { WorkItemsStore } from './workItems.store';
 import { NetworkQuery } from 'src/app/services/network/network.query';
 import { HttpClient } from '@angular/common/http';
-import { AppSettingsService, UserAuthenticationQuery } from 'ngscaffolding-core';
+import { AppSettingsService, UserAuthenticationQuery, LoggingService } from 'ngscaffolding-core';
 import { AppSettings, ZuluDateHelper } from 'ngscaffolding-models';
 import { WorkItemsQuery } from './workItems.query';
 import { catchError, timeout, map, retry } from 'rxjs/operators';
 import { WorkItemStatusReport } from '../../models/workItem.statusReport.model';
-import { Observable } from 'rxjs';
+import { Observable, timer, combineLatest } from 'rxjs';
 import { WorkItem } from '../../models';
 import { WorkItemUpdate } from '../../models/workitem.update.model';
 import * as uuidv4 from 'uuid/v4';
@@ -19,6 +19,8 @@ import { WorkItemAdditionalValuesQuery } from './workItemAdditionalValues.query'
 @Injectable({ providedIn: 'root' })
 export class WorkItemsService {
   constructor(
+    private log: LoggingService,
+    private ngZone: NgZone,
     private authQuery: UserAuthenticationQuery,
     private workItemsStore: WorkItemsStore,
     private workItemsQuery: WorkItemsQuery,
@@ -29,21 +31,33 @@ export class WorkItemsService {
     private networkQuery: NetworkQuery,
     private appSettingsService: AppSettingsService,
     private http: HttpClient
-  ) {
-    setInterval(_ => {
-      this.sendWorkItemUpdates().subscribe(data => this.getWorkItemUpdates());
-      // this.sendWorkItemUpdates().pipe(map(data => this.getWorkItemUpdates()));
-    }, 30000);
+  ) {}
 
-    // Send work Item updates
-    setInterval(_ => {
+  startPolling() {
+    const poll = timer(0, 30000);
+    const combined = combineLatest([poll, this.authQuery.authenticated$]);
+
+    this.ngZone.runOutsideAngular(() => {
+      combined.subscribe(([_poll, isAuthenticated]) => {
+        if (!isAuthenticated) {
+          return;
+        }
+        this.log.info('Starting WorkItemUpdates Polling');
+        this.ngZone.run(() => this.processUpdates());
+      });
+    });
+  }
+
+  private processUpdates() {
+    this.sendWorkItemUpdates().subscribe(data => {
+      this.getWorkItemUpdates();
+
+      // Send work Item updates
       this.sendUpdatesServer();
-    }, 30000);
 
-    // Send work Item Additional Values
-    setInterval(_ => {
+      // Send work Item Additional Values
       this.sendAdditionalValuesServer();
-    }, 30000);
+    });
   }
 
   public sendWorkItemUpdates(): Observable<any> {
@@ -86,7 +100,7 @@ export class WorkItemsService {
         //   map(statusReportLines => {
         .subscribe(
           statusReportLines => {
-            console.log(`Download WorkList`, statusReportLines);
+            this.log.info(`Downloaded WorkList`);
             for (const workItemUpdate of statusReportLines) {
               //      Check to see if WorkItem is in Local Store
               //      If I dont Have a copy yet -- (Done below) or WorkItem.LastUpdated > LocalCopy.LastUpdated
