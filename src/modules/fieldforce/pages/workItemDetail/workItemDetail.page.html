@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
+    <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'WorkItem Detail' | translate }}</ion-title>
@@ -51,28 +51,29 @@
         </ion-card>
       </super-tab>
       <super-tab>
-
         <!-- Serial Number Here -->
-        <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
+        <div *ngIf="isLoaded">
+          <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
 
-        <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
-          <ion-icon name="send"></ion-icon>
-          {{ 'Send Update' | translate }}
-        </ion-button>
+          <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
+            <ion-icon name="send"></ion-icon>
+            {{ 'Send Update' | translate }}
+          </ion-button>
 
-        <ion-radio-group [(ngModel)]="selectedAsset">
-          <ion-list-header>
-            <ion-label>{{ 'Shipped Assets' | translate }}</ion-label>
-          </ion-list-header>
+          <ion-radio-group [(ngModel)]="selectedAsset">
+            <ion-list-header>
+              <ion-label>{{ 'Shipped Assets' | translate }}</ion-label>
+            </ion-list-header>
 
-          <ion-item *ngFor="let asset of shippedAssets">
-            <ion-label>{{ asset.display }}</ion-label>
-            <ion-radio slot="start" [value]="asset.value"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+            <ion-item *ngFor="let asset of shippedAssets">
+              <ion-label>{{ asset.display }}</ion-label>
+              <ion-radio slot="start" [value]="asset.value"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </div>
       </super-tab>
       <super-tab>
-        <ion-card>
+        <ion-card *ngIf="isLoaded">
           <ion-card-content>
             <div class="ion-padding"></div>
             <div *ngIf="updateStages$ | async as updateStages">

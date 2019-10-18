@@ -3,7 +3,7 @@ import { timer, combineLatest } from 'rxjs';
 
 export function warmCache(refValuesService: ReferenceValuesService, log: LoggingService, authQuery: UserAuthenticationQuery) {
   return () => {
-    const poll = timer(0, 1000);
+    const poll = timer(0, 20000);
     const combined = combineLatest([poll, authQuery.authenticated$]);
     let isDownloaded = false;
 
@@ -13,7 +13,15 @@ export function warmCache(refValuesService: ReferenceValuesService, log: Logging
       }
       log.info('Starting Cache Warm');
 
-      const preLoad = ['FieldForce.WorkItemUpdateStages.Reference', 'FieldForce.WorkItemUpdateCodes.Reference', 'FieldForce.ShippedAssets.Reference'];
+      const preLoad = [
+        'FieldForce.WorkItemUpdateStages.Reference',
+        'FieldForce.WorkItemUpdateCodes.Reference',
+        'FieldForce.ShippedAssets.Reference',
+        'FieldForce.Clients.Reference',
+        'FieldForce.Priorities.Reference',
+        'FieldForce.WorkItems.Types',
+        'FieldForce.WorkItems.SubTypes',
+      ];
 
       for (const reference of preLoad) {
         refValuesService.getReferenceValue(reference).subscribe(() => (isDownloaded = true));

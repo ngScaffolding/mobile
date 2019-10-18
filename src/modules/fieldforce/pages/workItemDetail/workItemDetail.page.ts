@@ -21,6 +21,7 @@ export class WorkItemDetailPage implements OnInit {
   updateStatus: any;
   updateStatus2: any;
   updateComment: string;
+  isLoaded = false;
 
   filterValue: string;
   selectedAsset: string;
@@ -39,6 +40,12 @@ export class WorkItemDetailPage implements OnInit {
       this.shippedAssetsFull = refVal.referenceValueItems;
       this.shippedAssets = refVal.referenceValueItems;
     });
+  }
+
+  ionViewDidEnter(): void {
+    setTimeout(() => {
+      this.isLoaded = true;
+    }, 100);
   }
 
   statusChanged($event: any) {
@@ -60,9 +67,9 @@ export class WorkItemDetailPage implements OnInit {
   }
 
   sendAsset() {
-    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, {AssetTag: this.selectedAsset});
+    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, { AssetTag: this.selectedAsset });
 
-        setTimeout(_ => {
+    setTimeout(_ => {
       this.notification.showMessage({
         summary: 'Asset Update',
         detail: 'Asset Details Sent',
