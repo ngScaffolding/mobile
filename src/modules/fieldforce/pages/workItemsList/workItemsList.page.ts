@@ -17,6 +17,8 @@ import { NotificationService } from '../../../../app/services/notification/notif
 })
 export class WorkItemsListPage {
   workItems$: Observable<WorkItem[]>;
+  showCompleted = true;
+
   constructor(
     private notification: NotificationService,
     private workItemsQuery: WorkItemsQuery,
@@ -30,6 +32,14 @@ export class WorkItemsListPage {
     private statusUpdateService: StatusUpdatesService
   ) {
     this.workItems$ = workItemsQuery.selectAll({});
+  }
+
+  showCompletedChanged(){
+    if (this.showCompleted) {
+      this.workItems$ = this.workItemsQuery.selectAll({});
+    } else {
+      this.workItems$ = this.workItemsQuery.selectAll({filterBy: workItem => workItem.WorkItemStatusCodeID !== 5});
+    }
   }
 
   refreshList() {

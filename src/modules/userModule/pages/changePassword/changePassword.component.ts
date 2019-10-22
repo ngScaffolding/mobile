@@ -27,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
     private userAuthService: UserAuthenticationService,
     private router: Router,
     private logger: LoggingService, private authQuery: UserAuthenticationQuery,
-    private appSettings: AppSettingsQuery, private spinner: SpinnerService, private componentLoader: ComponentLoaderService, private elementRef: ElementRef) {}
+    public appSettings: AppSettingsQuery, private spinner: SpinnerService, private componentLoader: ComponentLoaderService, private elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.minLength = this.appSettings.getEntity(AppSettings.authPasswordMinLength).value;

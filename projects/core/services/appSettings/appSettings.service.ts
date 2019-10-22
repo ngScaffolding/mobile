@@ -85,14 +85,14 @@ export class AppSettingsService {
   public loadFromJSON(production: boolean) {
     if (production) {
     return this.http
-      .get('/appConfig.prod.json')
+      .get('/assets/appConfig.prod.json')
       .toPromise()
       .then(data => {
         this.setValues(data as AppSettings);
       });
     } else {
       return this.http
-      .get('/appConfig.json')
+      .get('/assets/appConfig.json')
       .toPromise()
       .then(data => {
         this.setValues(data as AppSettings);

@@ -45,7 +45,7 @@ export class WorkItemDetailPage implements OnInit {
   ionViewDidEnter(): void {
     setTimeout(() => {
       this.isLoaded = true;
-    }, 100);
+    }, 500);
   }
 
   statusChanged($event: any) {

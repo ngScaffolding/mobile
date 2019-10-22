@@ -40,8 +40,8 @@ export class FieldForceModule {
     appSettingsService.setValue(AppSettings.title, 'FieldForce');
     appSettingsService.setValue(AppSettings.iconUrl, '');
 
-    // appSettingsService.setValue(AppSettings.apiHome, 'https://tesamm-api.azurewebsites.net');
-    // appSettingsService.setValue(AppSettings.apiAuth, 'https://tesamm-oauth.azurewebsites.net');
+    appSettingsService.setValue(AppSettings.apiHome, 'https://tesamm-api.azurewebsites.net');
+    appSettingsService.setValue(AppSettings.apiAuth, 'https://tesamm-oauth.azurewebsites.net');
 
     // appSettingsService.setValue(AppSettings.apiHome, 'http://localhost:3000');
     // appSettingsService.setValue(AppSettings.apiAuth, 'http://localhost:3010');
