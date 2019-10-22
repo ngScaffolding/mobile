@@ -15,10 +15,10 @@
       ><h1>{{ 'WorkItems for Today' | translate }}</h1></ion-label
     >
     <ion-card *ngFor="let workItem of workItems$ | async">
-      <ion-card-header>
-        <ion-card-title>Work Order: {{ workItem.WorkOrderNo }}</ion-card-title>
-      </ion-card-header>
       <ion-card-content>
+        <ion-item>
+          <ion-label class="ion-text-wrap">{{ 'Work Order' | translate }} {{ workItem.WorkOrderNo }}</ion-label>
+        </ion-item>
         <ion-item>
           <ion-label>{{ 'Status' | translate }}</ion-label>
           <ion-label class="ion-text-wrap">{{ workItem.WorkItemStatusCodeID | lookup: 'FieldForce.StatusCodes.Reference' | async }}</ion-label>

@@ -80,7 +80,7 @@
               <ion-item>
                 <ion-label position="floating">{{ 'Status' | translate }}</ion-label>
 
-                <ion-select [(ngModel)]="updateStatus" (ionChange)="statusChanged()" interface="popover">
+                <ion-select [(ngModel)]="updateStatus" (ionChange)="statusChanged()" interface="action-sheet">
                   <ion-select-option *ngFor="let notification of updateStages.referenceValueItems" [value]="notification.value">{{ notification.display }} </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -88,7 +88,7 @@
               <ion-item *ngIf="updateCodes">
                 <ion-label position="floating">{{ 'Update Code' | translate }}</ion-label>
 
-                <ion-select [(ngModel)]="updateStatus2" interface="popover">
+                <ion-select [(ngModel)]="updateStatus2" interface="action-sheet">
                   <ion-select-option *ngFor="let notification of updateCodes" [value]="notification.value">{{ notification.display }} </ion-select-option>
                 </ion-select>
               </ion-item>

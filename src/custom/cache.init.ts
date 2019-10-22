@@ -21,6 +21,8 @@ export function warmCache(refValuesService: ReferenceValuesService, log: Logging
         'FieldForce.Priorities.Reference',
         'FieldForce.WorkItems.Types',
         'FieldForce.WorkItems.SubTypes',
+        'FieldForce.StatusCodes.Reference',
+        'FieldForce.NotificationCodes.Reference',
       ];
 
       for (const reference of preLoad) {

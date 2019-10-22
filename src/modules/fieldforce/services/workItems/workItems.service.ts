@@ -107,6 +107,7 @@ export class WorkItemsService {
               if (!this.workItemsQuery.hasEntity(workItemUpdate.WorkItemID)) {
                 this.getWorkItem(workItemUpdate.WorkItemID);
               } else if (this.workItemsQuery.getEntity(workItemUpdate.WorkItemID).LastUpdated < workItemUpdate.LastUpdated) {
+                let work = this.workItemsQuery.getEntity(workItemUpdate.WorkItemID);
                 this.getWorkItem(workItemUpdate.WorkItemID);
               }
             }
@@ -146,7 +147,7 @@ export class WorkItemsService {
         timeout(30000),
         retry(3),
         map(data => {
-          this.workItemsStore.add(data);
+          this.workItemsStore.upsert(data.WorkItemID, data);
         })
       )
       .subscribe();

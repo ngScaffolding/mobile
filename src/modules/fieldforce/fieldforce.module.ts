@@ -15,7 +15,8 @@ const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'sendupdate', loadChildren: './pages/sendUpdate/send-update.module#SendUpdatePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'workitemdetail/:id', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] }
+  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'supportfieldforce', loadChildren: './pages/supportFieldForce/supportFieldForce.module#SupportFieldForcePageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({
@@ -73,6 +74,25 @@ export class FieldForceModule {
       'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.'
     );
 
-    // menuService.addMenuItemsFromCode([]);
+    menuService.addMenuItemsFromCode([
+      {
+        label: 'Home',
+        icon: 'home',
+        routerLink: 'home',
+        order: 100
+      },
+      {
+        label: 'Work Items',
+        icon: 'build',
+        routerLink: 'workitems',
+        order: 150
+      },
+      {
+        label: 'FF Support',
+        icon: 'settings',
+        routerLink: 'supportfieldforce',
+        order: 800
+      }
+    ]);
   }
 }
