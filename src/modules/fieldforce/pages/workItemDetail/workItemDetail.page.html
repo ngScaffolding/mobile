@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <super-tabs>
+  <!-- <super-tabs>
     <super-tabs-container>
-      <super-tab>
+      <super-tab> -->
         <ion-card>
           <ion-card-content>
             <ion-list>
@@ -49,10 +49,14 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
-      </super-tab>
-      <super-tab>
+      <!-- </super-tab> -->
+      <!-- <super-tab> -->
         <!-- Serial Number Here -->
-        <div *ngIf="isLoaded">
+        <ion-card *ngIf="isLoaded">
+          <ion-card-header>
+            Assign Asset
+          </ion-card-header>
+          <ion-card-content>
           <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
 
           <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
@@ -70,10 +74,13 @@
               <ion-radio slot="start" [value]="asset.value"></ion-radio>
             </ion-item>
           </ion-radio-group>
-        </div>
-      </super-tab>
-      <super-tab>
+        </ion-card-content></ion-card>
+      <!-- </super-tab> -->
+      <!-- <super-tab> -->
         <ion-card *ngIf="isLoaded">
+            <ion-card-header>
+                Send Update
+              </ion-card-header>
           <ion-card-content>
             <div class="ion-padding"></div>
             <div *ngIf="updateStages$ | async as updateStages">
@@ -109,10 +116,9 @@
             </div>
           </ion-card-content>
         </ion-card>
-      </super-tab>
+      <!-- </super-tab>
     </super-tabs-container>
     <super-tabs-toolbar>
-      <!-- Listen to click events on any tab button -->
       <super-tab-button>
         <ion-label>{{ 'Details' | translate }}</ion-label>
         <ion-icon name="clipboard"></ion-icon>
@@ -126,5 +132,5 @@
         <ion-icon name="mail"></ion-icon>
       </super-tab-button>
     </super-tabs-toolbar>
-  </super-tabs>
+  </super-tabs> -->
 </ion-content>
