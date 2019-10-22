@@ -7,8 +7,7 @@ export class ColumnModel {
   headerTooltip?: string;
   pinned?: string; // left or right
   suppressMenu?: boolean;
-  filter?: string;
-
+  filter?: boolean;
   sortable?: boolean;
 
   // dateTimeColumn, dateColumn, numericColumn
