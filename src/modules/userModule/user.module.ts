@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Routes, RouterModule } from '@angular/router';
-import { AuthoriseRoleGuard } from 'ngscaffolding-core';
+import { AuthoriseRoleGuard, UserService } from 'ngscaffolding-core';
 
 
 const appRoutes: Routes = [

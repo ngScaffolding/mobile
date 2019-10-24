@@ -11,7 +11,7 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { AppSettings } from '@ngscaffolding/models';
+import { AppSettings } from 'ngscaffolding-models';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -105,7 +105,20 @@ export class AppModule {
     appSettingsService.setValue(AppSettings.title, 'ngScaffolding Mobile');
     appSettingsService.setValue(AppSettings.isMobile, true);
 
+    // Password complexity
+    appSettingsService.setValue(AppSettings.authPasswordMinLength, 8);
+    appSettingsService.setValue(AppSettings.authPasswordUpperCase, true);
+    appSettingsService.setValue(AppSettings.authPasswordLowerCase, true);
+    appSettingsService.setValue(AppSettings.authPasswordNumeric, true);
+    appSettingsService.setValue(AppSettings.authPasswordSpecial, false);
+
     menuService.addMenuItemsFromCode([
+      {
+        label: 'Change Password',
+        icon: 'lock',
+        routerLink: 'changepassword',
+        order: 940
+      },
       {
         label: 'Logoff',
         icon: 'log-out',
