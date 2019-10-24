@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { LogoffPage } from './logoff.page';
 
-import { SharedModule } from '../app.shared.module';
+import { SharedModule } from '../../app.shared.module';
 
 const routes: Routes = [
   {
