@@ -10,6 +10,8 @@ import { WorkItemsQuery } from '../../services/workItems/workItems.query';
 import { WorkItem } from '../../models';
 import { WorkItemsService } from '../../services/workItems/workItems.service';
 import { NotificationService } from '../../../../app/services/notification/notification.service';
+import { Router } from '@angular/router';
+import { WorkItemsStore } from '../../stores/workItems.store';
 
 @Component({
   templateUrl: 'workItemsList.page.html',
@@ -23,13 +25,8 @@ export class WorkItemsListPage {
     private notification: NotificationService,
     private workItemsQuery: WorkItemsQuery,
     private workItemsService: WorkItemsService,
-    private navCtrl: NavController,
-    private refValuesService: ReferenceValuesService,
-    private geolocation: Geolocation,
-    private authQuery: UserAuthenticationQuery,
-    private toastController: ToastController,
-    private translate: TranslateService,
-    private statusUpdateService: StatusUpdatesService
+    private router: Router,
+    private workItemsStore: WorkItemsStore
   ) {
     this.workItems$ = workItemsQuery.selectAll({});
   }
@@ -40,6 +37,12 @@ export class WorkItemsListPage {
     } else {
       this.workItems$ = this.workItemsQuery.selectAll({filterBy: workItem => workItem.WorkItemStatusCodeID !== 5});
     }
+  }
+
+  openWorkItem(workItemId: string) {
+
+    this.workItemsStore.setActive(workItemId);
+    this.router.navigate(['/workitemdetail']);
   }
 
   refreshList() {

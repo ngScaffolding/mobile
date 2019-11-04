@@ -35,7 +35,7 @@
         </ion-item>
 
         <div class="ion-padding"></div>
-        <ion-button [routerLink]="['/workitemdetail', workItem.WorkItemID]" routerDirection="forward" type="submit" expand="block" color="primary">
+        <ion-button (click)="openWorkItem(workItem.WorkItemID)"  expand="block" color="primary">
           <ion-icon slot="start" name="send"></ion-icon>
           {{ 'Details' | translate }}
         </ion-button>

@@ -12,7 +12,6 @@ const routes: Routes = [
   { path: 'logoff', loadChildren: './pages/logoff/logoff.module#LogoffPageModule' },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'changepassword', loadChildren: './pages/changePassword/changePassword.module#ChangePasswordPageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 

@@ -30,7 +30,7 @@ export class WorkItemDetailPage implements OnInit {
   shippedAssets: ReferenceValueItem[];
 
   ngOnInit(): void {
-    this.workItem = this.workItemsQuery.getEntity(this.route.snapshot.params.id);
+    this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
     this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
     this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
       this.fullUpdateCodes = refVal.referenceValueItems;
@@ -56,6 +56,13 @@ export class WorkItemDetailPage implements OnInit {
 
   sendUpdate() {
     this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2, this.updateComment);
+
+    const completeCode = this.updateCodes.find(code => code.display === 'Work Completed').value;
+    // TODO: Magic Number
+    const completeStatus = 5;
+    if (this.updateStatus2 === completeCode) {
+      this.workItem.WorkItemStatusCodeID = completeStatus;
+    }
 
     setTimeout(_ => {
       this.notification.showMessage({

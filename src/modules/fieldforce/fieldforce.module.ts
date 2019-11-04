@@ -14,7 +14,7 @@ import { Network } from '@ionic-native/network/ngx';
 const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'sendupdate', loadChildren: './pages/sendUpdate/send-update.module#SendUpdatePageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitemdetail/:id', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'workitemdetail', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'supportfieldforce', loadChildren: './pages/supportFieldForce/supportFieldForce.module#SupportFieldForcePageModule', canActivate: [AuthoriseRoleGuard] }
 ];
