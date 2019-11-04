@@ -12,7 +12,7 @@
     <super-tabs-container>
       <super-tab> -->
         <ion-card>
-          <ion-card-content>
+          <ion-card-content *ngIf="workItem$ | async as workItem">
             <ion-list>
               <ion-item>
                 <ion-label>Work Order No</ion-label>

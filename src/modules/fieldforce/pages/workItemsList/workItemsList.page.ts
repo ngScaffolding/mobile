@@ -31,22 +31,22 @@ export class WorkItemsListPage {
     this.workItems$ = workItemsQuery.selectAll({});
   }
 
-  showCompletedChanged(){
+  showCompletedChanged() {
     if (this.showCompleted) {
       this.workItems$ = this.workItemsQuery.selectAll({});
     } else {
-      this.workItems$ = this.workItemsQuery.selectAll({filterBy: workItem => workItem.WorkItemStatusCodeID !== 5});
+      this.workItems$ = this.workItemsQuery.selectAll({ filterBy: workItem => workItem.WorkItemStatusCodeID !== 5 });
     }
   }
 
   openWorkItem(workItemId: string) {
-
     this.workItemsStore.setActive(workItemId);
-    this.router.navigate(['/workitemdetail']);
+    setTimeout(() => {
+      this.router.navigate(['/workitemdetail']);
+    }, 50);
   }
 
   refreshList() {
-
     this.workItemsService.getWorkItemUpdates();
 
     setTimeout(_ => {

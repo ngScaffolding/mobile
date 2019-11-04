@@ -12,8 +12,6 @@ const initialState = {
 @StoreConfig({ name: 'workItems', idKey: 'WorkItemID' })
 
 export class WorkItemsStore extends EntityStore<WorkItemsState, WorkItem> {
-
-
   constructor() {
     super(initialState);
     console.log('WorkItemsStore Constructor');

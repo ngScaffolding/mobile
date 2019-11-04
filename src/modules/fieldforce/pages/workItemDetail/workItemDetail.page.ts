@@ -14,6 +14,8 @@ import { NotificationService } from '../../../../app/services/notification/notif
 })
 export class WorkItemDetailPage implements OnInit {
   workItem: WorkItem;
+  workItem$: Observable<WorkItem>;
+
 
   updateStages$: Observable<ReferenceValue>;
   fullUpdateCodes: ReferenceValueItem[];
@@ -30,19 +32,28 @@ export class WorkItemDetailPage implements OnInit {
   shippedAssets: ReferenceValueItem[];
 
   ngOnInit(): void {
-    this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
-    this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
-    this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
-      this.fullUpdateCodes = refVal.referenceValueItems;
-    });
+    let workItemId = this.workItemsQuery.getActiveId();
 
-    this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
-      this.shippedAssetsFull = refVal.referenceValueItems;
-      this.shippedAssets = refVal.referenceValueItems;
-    });
+    // this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
+    // this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
+    // this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
+    //   this.fullUpdateCodes = refVal.referenceValueItems;
+    // });
+
+    // this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
+    //   this.shippedAssetsFull = refVal.referenceValueItems;
+    //   this.shippedAssets = refVal.referenceValueItems;
+    // });
   }
 
   ionViewDidEnter(): void {
+
+    this.workItem$ = this.workItemsQuery.selectActive() as Observable<WorkItem>;
+
+    this.workItem$.subscribe(wi=>{
+      let x = wi.WorkOrderNo;
+      let y = 0;
+    });
     setTimeout(() => {
       this.isLoaded = true;
     }, 500);
