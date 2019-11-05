@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content>
+    <!-- <ion-refresher slot="fixed" (ionRefresh)="refreshList()">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher> -->
   <div class="ion-padding">
     <ion-label>
       <h1>{{ 'WorkItems for Today' | translate }}</h1>
@@ -17,7 +20,7 @@
 
     <ion-item>
         <ion-label>{{'Show Completed' | translate}}</ion-label>
-        <ion-toggle [(ngModel)]="showCompleted" (ionChange)="showCompletedChanged()"></ion-toggle>
+        <ion-toggle [(ngModel)]="showCompleted" (ionChange)="updateDisplayList()"></ion-toggle>
       </ion-item>
 
     <ion-card *ngFor="let workItem of workItems$ | async">

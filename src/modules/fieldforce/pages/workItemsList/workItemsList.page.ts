@@ -11,7 +11,7 @@ import { WorkItem } from '../../models';
 import { WorkItemsService } from '../../services/workItems/workItems.service';
 import { NotificationService } from '../../../../app/services/notification/notification.service';
 import { Router } from '@angular/router';
-import { WorkItemsStore } from '../../stores/workItems.store';
+import { WorkItemsStore } from '../../services/workItems/workItems.store';
 
 @Component({
   templateUrl: 'workItemsList.page.html',
@@ -19,7 +19,7 @@ import { WorkItemsStore } from '../../stores/workItems.store';
 })
 export class WorkItemsListPage {
   workItems$: Observable<WorkItem[]>;
-  showCompleted = true;
+  showCompleted = false;
 
   constructor(
     private notification: NotificationService,
@@ -28,10 +28,10 @@ export class WorkItemsListPage {
     private router: Router,
     private workItemsStore: WorkItemsStore
   ) {
-    this.workItems$ = workItemsQuery.selectAll({});
+    this.updateDisplayList();
   }
 
-  showCompletedChanged() {
+  updateDisplayList() {
     if (this.showCompleted) {
       this.workItems$ = this.workItemsQuery.selectAll({});
     } else {
@@ -41,9 +41,7 @@ export class WorkItemsListPage {
 
   openWorkItem(workItemId: string) {
     this.workItemsStore.setActive(workItemId);
-    setTimeout(() => {
-      this.router.navigate(['/workitemdetail']);
-    }, 50);
+    this.router.navigate(['/workitemdetail']);
   }
 
   refreshList() {

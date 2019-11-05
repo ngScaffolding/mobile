@@ -7,15 +7,15 @@ import { WorkItemsQuery } from '../../services/workItems/workItems.query';
 import { WorkItem } from '../../models';
 import { WorkItemsService } from '../../services/workItems/workItems.service';
 import { NotificationService } from '../../../../app/services/notification/notification.service';
+import { WorkItemsStore } from '../../services/workItems/workItems.store';
 
 @Component({
   templateUrl: 'workItemDetail.page.html',
   styleUrls: ['workItemDetail.page.scss']
 })
-export class WorkItemDetailPage implements OnInit {
+export class WorkItemDetailPage {
   workItem: WorkItem;
   workItem$: Observable<WorkItem>;
-
 
   updateStages$: Observable<ReferenceValue>;
   fullUpdateCodes: ReferenceValueItem[];
@@ -23,7 +23,6 @@ export class WorkItemDetailPage implements OnInit {
   updateStatus: any;
   updateStatus2: any;
   updateComment: string;
-  isLoaded = false;
 
   filterValue: string;
   selectedAsset: string;
@@ -31,32 +30,19 @@ export class WorkItemDetailPage implements OnInit {
   shippedAssetsFull: ReferenceValueItem[];
   shippedAssets: ReferenceValueItem[];
 
-  ngOnInit(): void {
-    let workItemId = this.workItemsQuery.getActiveId();
-
-    // this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
-    // this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
-    // this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
-    //   this.fullUpdateCodes = refVal.referenceValueItems;
-    // });
-
-    // this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
-    //   this.shippedAssetsFull = refVal.referenceValueItems;
-    //   this.shippedAssets = refVal.referenceValueItems;
-    // });
-  }
-
   ionViewDidEnter(): void {
-
     this.workItem$ = this.workItemsQuery.selectActive() as Observable<WorkItem>;
 
-    this.workItem$.subscribe(wi=>{
-      let x = wi.WorkOrderNo;
-      let y = 0;
+    this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
+    this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
+    this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
+      this.fullUpdateCodes = refVal.referenceValueItems;
     });
-    setTimeout(() => {
-      this.isLoaded = true;
-    }, 500);
+
+    this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
+      this.shippedAssetsFull = refVal.referenceValueItems;
+      this.shippedAssets = refVal.referenceValueItems;
+    });
   }
 
   statusChanged($event: any) {
@@ -72,7 +58,7 @@ export class WorkItemDetailPage implements OnInit {
     // TODO: Magic Number
     const completeStatus = 5;
     if (this.updateStatus2 === completeCode) {
-      this.workItem.WorkItemStatusCodeID = completeStatus;
+      this.workItemsStore.updateActive({WorkItemStatusCodeID: completeStatus});
     }
 
     setTimeout(_ => {
@@ -81,6 +67,8 @@ export class WorkItemDetailPage implements OnInit {
         detail: 'Update Details Sent',
         severity: 'success'
       });
+      this.updateStatus = null;
+      this.updateStatus2 = null;
     }, 500);
   }
 
@@ -105,6 +93,7 @@ export class WorkItemDetailPage implements OnInit {
     private refValuesService: ReferenceValuesService,
     private route: ActivatedRoute,
     private workItemsQuery: WorkItemsQuery,
+    private workItemsStore: WorkItemsStore,
     private workItemsService: WorkItemsService
   ) {}
 }
