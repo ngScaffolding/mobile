@@ -17,59 +17,13 @@ export class WorkItemDetailPage {
   workItem: WorkItem;
   workItem$: Observable<WorkItem>;
 
-  updateStages$: Observable<ReferenceValue>;
-  fullUpdateCodes: ReferenceValueItem[];
-  updateCodes: ReferenceValueItem[];
-  updateStatus: any;
-  updateStatus2: any;
-  updateComment: string;
 
-  filterValue: string;
-  selectedAsset: string;
 
-  shippedAssetsFull: ReferenceValueItem[];
-  shippedAssets: ReferenceValueItem[];
 
   ionViewDidEnter(): void {
     this.workItem$ = this.workItemsQuery.selectActive() as Observable<WorkItem>;
 
     this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
-    this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
-    this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
-      this.fullUpdateCodes = refVal.referenceValueItems;
-    });
-
-    this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
-      this.shippedAssetsFull = refVal.referenceValueItems;
-      this.shippedAssets = refVal.referenceValueItems;
-    });
-  }
-
-  statusChanged($event: any) {
-    // tslint:disable-next-line: triple-equals
-    this.updateStatus2 = null;
-    this.updateCodes = this.fullUpdateCodes.filter(c => c.subtitle == this.updateStatus);
-  }
-
-  sendUpdate() {
-    this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2, this.updateComment);
-
-    const completeCode = this.updateCodes.find(code => code.display === 'Work Completed').value;
-    // TODO: Magic Number
-    const completeStatus = 5;
-    if (this.updateStatus2 === completeCode) {
-      this.workItemsStore.updateActive({WorkItemStatusCodeID: completeStatus});
-    }
-
-    setTimeout(_ => {
-      this.notification.showMessage({
-        summary: 'Update',
-        detail: 'Update Details Sent',
-        severity: 'success'
-      });
-      this.updateStatus = null;
-      this.updateStatus2 = null;
-    }, 500);
   }
 
   sendAsset() {
@@ -84,13 +38,10 @@ export class WorkItemDetailPage {
     }, 500);
   }
 
-  updateFilter(filterValue: string) {
-    this.shippedAssets = this.shippedAssetsFull.filter(asset => asset.value.toUpperCase().startsWith(this.filterValue.toUpperCase()));
-  }
+
 
   constructor(
     private notification: NotificationService,
-    private refValuesService: ReferenceValuesService,
     private route: ActivatedRoute,
     private workItemsQuery: WorkItemsQuery,
     private workItemsStore: WorkItemsStore,

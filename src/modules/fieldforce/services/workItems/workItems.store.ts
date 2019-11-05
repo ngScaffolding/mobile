@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig, ActiveState } from '@datorama/akita';
-import { WorkItem } from '../models';
+import { WorkItem } from '../../models/workItem.model';
 
 export interface WorkItemsState extends EntityState<WorkItem>, ActiveState {}
 

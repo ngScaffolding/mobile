@@ -8,129 +8,26 @@
 </ion-header>
 
 <ion-content>
-  <!-- <super-tabs>
-    <super-tabs-container>
-      <super-tab> -->
-        <ion-card>
-          <ion-card-content *ngIf="workItem$ | async as workItem">
-            <ion-list>
-              <ion-item>
-                <ion-label>Work Order No</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.WorkOrderNo }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Date Planned</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.DatePlanned | ngsDateTime }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Survey Comment</ion-label>
-                <ion-label class="ion-text-wrap">{{ workItem.SurveyComment }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Status</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.WorkItemStatusCodeID | lookup: 'FieldForce.StatusCodes.Reference' | async }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Client</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.ClientID | lookup: 'FieldForce.Clients.Reference' | async }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Priority</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.WorkItemPriorityID | lookup: 'FieldForce.Priorities.Reference' | async }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Type</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.WorkItemTypeID | lookup: 'FieldForce.WorkItems.Types' | async }}</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>Subtype</ion-label>
-                <ion-label class="ion-text-wrap" slot="end">{{ workItem.WorkItemSubTypeID | lookup: 'FieldForce.WorkItems.SubTypes' | async }}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      <!-- </super-tab> -->
-      <!-- <super-tab> -->
-        <!-- Serial Number Here -->
-        <ion-card>
-          <ion-card-header>
-            Assign Asset
-          </ion-card-header>
-          <ion-card-content>
-          <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
 
-          <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
-            <ion-icon name="send"></ion-icon>
-            {{ 'Send Update' | translate }}
-          </ion-button>
-
-          <ion-radio-group style="height: 400px; overflow: auto;" [(ngModel)]="selectedAsset">
-            <ion-list-header>
-              <ion-label>{{ 'Shipped Assets' | translate }}</ion-label>
-            </ion-list-header>
-
-            <ion-item *ngFor="let asset of shippedAssets">
-              <ion-label>{{ asset.display }}</ion-label>
-              <ion-radio slot="start" [value]="asset.value"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-card-content></ion-card>
-      <!-- </super-tab> -->
-      <!-- <super-tab> -->
-        <ion-card>
-            <ion-card-header>
-                Send Update
-              </ion-card-header>
-          <ion-card-content>
-            <div class="ion-padding"></div>
-            <div *ngIf="updateStages$ | async as updateStages">
-              <ion-item>
-                <ion-label position="floating">{{ 'Status' | translate }}</ion-label>
-
-                <ion-select [(ngModel)]="updateStatus" (ionChange)="statusChanged()" interface="action-sheet">
-                  <ion-select-option *ngFor="let notification of updateStages.referenceValueItems" [value]="notification.value">{{ notification.display }} </ion-select-option>
-                </ion-select>
-              </ion-item>
-              <div class="ion-padding"></div>
-              <ion-item *ngIf="updateCodes">
-                <ion-label position="floating">{{ 'Update Code' | translate }}</ion-label>
-
-                <ion-select [(ngModel)]="updateStatus2" interface="action-sheet">
-                  <ion-select-option *ngFor="let notification of updateCodes" [value]="notification.value">{{ notification.display }} </ion-select-option>
-                </ion-select>
-              </ion-item>
-
-              <div class="ion-padding"></div>
-
-              <ion-item *ngIf="updateStatus2">
-                <ion-textarea [(ngModel)]="updateComment" placeholder="{{ 'Comments ...' | translate }}"></ion-textarea>
-              </ion-item>
-
-              <div class="ion-padding"></div>
-              <div class="ion-padding"></div>
-
-              <ion-button size="large" *ngIf="updateStatus2" (click)="sendUpdate()" routerDirection="forward" type="submit" expand="block" color="primary">
-                <ion-icon name="send"></ion-icon>
-                {{ 'Send Update' | translate }}
-              </ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      <!-- </super-tab>
-    </super-tabs-container>
-    <super-tabs-toolbar>
-      <super-tab-button>
-        <ion-label>{{ 'Details' | translate }}</ion-label>
-        <ion-icon name="clipboard"></ion-icon>
-      </super-tab-button>
-      <super-tab-button>
-        <ion-label>{{ 'Record' | translate }}</ion-label>
-        <ion-icon name="create"></ion-icon>
-      </super-tab-button>
-      <super-tab-button>
-        <ion-label>{{ 'Update' | translate }}</ion-label>
-        <ion-icon name="mail"></ion-icon>
-      </super-tab-button>
-    </super-tabs-toolbar>
-  </super-tabs> -->
+    <ion-tabs>
+        <ion-tab-bar slot="bottom" color="primary">
+          <ion-tab-button tab="details">
+            <ion-icon name="clipboard"></ion-icon>
+            <ion-label>{{ 'Details' | translate }}</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="record">
+            <ion-icon name="create"></ion-icon>
+            <ion-label>{{ 'Record' | translate }}</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="update">
+            <ion-icon name="mail"></ion-icon>
+            <ion-label>{{ 'Update' | translate }}</ion-label>
+          </ion-tab-button>
+      
+        </ion-tab-bar>
+      </ion-tabs>
+      
+     
 </ion-content>
