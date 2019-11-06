@@ -14,27 +14,5 @@ import { WorkItemsStore } from '../../services/workItems/workItems.store';
   styleUrls: ['workItemDetail.page.scss']
 })
 export class WorkItemDetailPage {
-  workItem: WorkItem;
-  workItem$: Observable<WorkItem>;
-
-
-
-
-  ionViewDidEnter(): void {
-    this.workItem$ = this.workItemsQuery.selectActive() as Observable<WorkItem>;
-
-    this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
-  }
-
-
-
-
-
-  constructor(
-    private notification: NotificationService,
-    private route: ActivatedRoute,
-    private workItemsQuery: WorkItemsQuery,
-    private workItemsStore: WorkItemsStore,
-    private workItemsService: WorkItemsService
-  ) {}
+  constructor() {}
 }

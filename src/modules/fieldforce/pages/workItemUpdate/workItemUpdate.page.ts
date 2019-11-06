@@ -43,7 +43,7 @@ export class WorkItemUpdatePage  {
   sendUpdate() {
     this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2, this.updateComment);
 
-    const completeCode = this.updateCodes.find(code => code.display === 'Work Completed').value;
+    const completeCode = this.fullUpdateCodes.find(code => code.display === 'Work Completed').value;
     // TODO: Magic Number
     const completeStatus = 5;
     if (this.updateStatus2 === completeCode) {
@@ -62,8 +62,8 @@ export class WorkItemUpdatePage  {
   }
 
   statusChanged($event: any) {
-    // tslint:disable-next-line: triple-equals
     this.updateStatus2 = null;
+    // tslint:disable-next-line: triple-equals
     this.updateCodes = this.fullUpdateCodes.filter(c => c.subtitle == this.updateStatus);
   }
 

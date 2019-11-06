@@ -12,7 +12,7 @@ import { UIStateStore, UIState } from '../../services/uiState/uiState.store';
   templateUrl: './logon.page.html',
   styleUrls: ['./logon.page.scss']
 })
-export class LogonPage implements OnInit {
+export class LogonPage {
   private readonly className = 'LoginPagecomponent';
   private readonly rememberMeCookie = 'authRememberMe';
   private readonly userNameCookie = 'authuserName';
@@ -34,7 +34,7 @@ export class LogonPage implements OnInit {
     private storage: Storage
   ) {}
 
-  ngOnInit() {
+  ionViewDidEnter(): void {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
@@ -42,19 +42,6 @@ export class LogonPage implements OnInit {
       this.rememberMe = result.logonRememberMe;
       this.inputModel.username = result.logonUserID;
     });
-
-    // // Are we going to Remember?
-    // if (this.appSettings.getValue(AppSettings.authShowRememberMe)) {
-    //   this.storage.get(this.rememberMeCookie).then(remember => {
-    //     this.rememberMe = remember === 'true';
-    //   });
-
-    //   if (this.rememberMe) {
-    //      this.storage.get(this.userNameCookie).then(userName => {
-    //       this.inputModel.username = userName;
-    //     });
-    //   }
-    // }
   }
 
   rememberChanged(event: any) {
