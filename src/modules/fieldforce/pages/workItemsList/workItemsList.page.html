@@ -18,7 +18,7 @@
       <ion-label>
         <h1>{{ 'WorkItems for Today' | translate }}</h1>
       </ion-label>
-      <ion-badge slot="end" color="primary">{{(workItems$ | async).length}}</ion-badge>
+      <ion-badge mode="ios" slot="end" color="primary">{{(workItems$ | async).length}}</ion-badge>
     </ion-item>
 
     <ion-item>
