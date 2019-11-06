@@ -26,17 +26,7 @@ export class WorkItemDetailPage {
     this.workItem = this.workItemsQuery.getEntity(this.workItemsQuery.getActiveId());
   }
 
-  sendAsset() {
-    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, { AssetTag: this.selectedAsset });
 
-    setTimeout(_ => {
-      this.notification.showMessage({
-        summary: 'Asset Update',
-        detail: 'Asset Details Sent',
-        severity: 'success'
-      });
-    }, 500);
-  }
 
 
 

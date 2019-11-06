@@ -41,7 +41,7 @@ export class WorkItemsListPage {
 
   openWorkItem(workItemId: string) {
     this.workItemsStore.setActive(workItemId);
-    this.router.navigate(['/workitemdetail']);
+    this.router.navigate(['/workitemdetail/details']);
   }
 
   refreshList() {

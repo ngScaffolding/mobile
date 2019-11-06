@@ -17,7 +17,26 @@ import { SuperTabsModule } from '@ionic-super-tabs/angular';
     RouterModule.forChild([
       {
         path: '',
-        component: WorkItemDetailPage
+        component: WorkItemDetailPage,
+        children: [
+          {
+              path: 'details',
+              loadChildren: () => import('../workItemTop/workItemTop.module').then(m => m.WorkItemTopPageModule)
+          },
+          {
+              path: 'record',
+              loadChildren: () => import('../workItemInputs/workItemInputs.module').then(m => m.WorkItemInputsPageModule)
+          },
+          {
+              path: 'update',
+              loadChildren: () => import('../workItemUpdate/workItemUpdate.module').then(m => m.WorkItemUpdatePageModule)
+          }
+      ]
+      },
+      {
+          path: '',
+          redirectTo: 'workitemdetails/details',
+          pathMatch: 'full'
       }
     ])
   ],

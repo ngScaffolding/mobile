@@ -45,4 +45,15 @@ export class WorkItemInputsPage {
   updateFilter(filterValue: string) {
     this.shippedAssets = this.shippedAssetsFull.filter(asset => asset.value.toUpperCase().startsWith(this.filterValue.toUpperCase()));
   }
+  sendAsset() {
+    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, { AssetTag: this.selectedAsset });
+
+    setTimeout(_ => {
+      this.notification.showMessage({
+        summary: 'Asset Update',
+        detail: 'Asset Details Sent',
+        severity: 'success'
+      });
+    }, 500);
+  }
 }
