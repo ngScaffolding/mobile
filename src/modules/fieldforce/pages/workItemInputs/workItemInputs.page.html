@@ -1,8 +1,8 @@
 <ion-card>
-    <ion-card-header>
-      Assign Asset
-    </ion-card-header>
-    <ion-card-content>
+  <ion-card-header>
+    Assign Asset
+  </ion-card-header>
+  <ion-card-content>
     <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
 
     <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
@@ -20,4 +20,5 @@
         <ion-radio slot="start" [value]="asset.value"></ion-radio>
       </ion-item>
     </ion-radio-group>
-  </ion-card-content></ion-card>
+  </ion-card-content>
+</ion-card>

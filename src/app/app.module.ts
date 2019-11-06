@@ -28,6 +28,7 @@ import { NotificationService } from './services/notification/notification.servic
 // Ionic Modules
 import { IonicStorageModule } from '@ionic/storage';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { AutoCompleteModule } from 'ionic4-auto-complete';
 
 import {
   CoreModule,
@@ -61,6 +62,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
     BrowserModule,
     HttpClientModule,
     ComponentsModule,
+    AutoCompleteModule,
     IonicModule.forRoot(),
     CoreModule.forRoot(),
     CUSTOM_IMPORTS,
@@ -100,7 +102,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 })
 export class AppModule {
   constructor(appSettingsService: AppSettingsService, logger: LoggingService, menuService: MenuService) {
-    logger.info('Setting Values', 'ngScaffolding-mobile startup');
+    logger.info('Setting Values ngScaffolding-mobile startup');
 
     appSettingsService.setValue(AppSettings.title, 'ngScaffolding Mobile');
     appSettingsService.setValue(AppSettings.isMobile, true);

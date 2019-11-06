@@ -27,6 +27,9 @@
       ],
       "ngscaffolding-core": [
         "projects/core/public_api"
+      ],
+      "ngscaffolding-inputbuilder-mobile": [
+        "projects/inputbuilder-mobile/public_api"
       ]
     }
   }
