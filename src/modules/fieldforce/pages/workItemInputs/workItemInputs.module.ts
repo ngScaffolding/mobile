@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../app/app.shared.module';
 import { WorkItemInputsPage } from './workItemInputs.page';
 
-import { InputBuilderModule } from 'ngscaffolding-inputbuilder-mobile';
+import { InputBuilderMobileModule } from 'ngscaffolding-inputbuilder-mobile';
 
 @NgModule({
   imports: [
@@ -14,6 +14,7 @@ import { InputBuilderModule } from 'ngscaffolding-inputbuilder-mobile';
     FormsModule,
     IonicModule,
     SharedModule,
+    InputBuilderMobileModule,
     RouterModule.forChild([
       {
         path: '',

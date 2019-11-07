@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VersionsService, CoreModule } from 'ngscaffolding-core';
 
+import { IonicModule } from '@ionic/angular';
 import { InputBuilderComponent } from './inputBuilder/inputBuilder.component';
 
 import { AutoCompleteModule } from 'ionic4-auto-complete';
@@ -17,34 +18,15 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CoreModule,
     CommonModule,
+    IonicModule,
     HttpClientModule,
     AutoCompleteModule,
     FormsModule,
-    
-
     ReactiveFormsModule,
-    InputSwitchModule,
-    InputTextModule,
-    InputMaskModule,
-    SpinnerModule,
-    CalendarModule,
-    TriStateCheckboxModule,
-    InputTextareaModule,
-    CheckboxModule,
-    RadioButtonModule,
-    DropdownModule,
-    PasswordModule,
-    RatingModule,
-    KeyFilterModule,
-    MultiSelectModule,
-    ToggleButtonModule,
-    TooltipModule,
-    NgJsonEditorModule,
-    FileUploadModule,
     TranslateModule
   ],
-  declarations: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent],
-  exports: [EditableTitleComponent, InputBuilderComponent, InputBuilderPopupComponent]
+  declarations: [InputBuilderComponent],
+  exports: [InputBuilderComponent]
 })
 export class InputBuilderMobileModule {
   static forRoot(): ModuleWithProviders {

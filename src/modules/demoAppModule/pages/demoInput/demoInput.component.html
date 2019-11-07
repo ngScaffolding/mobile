@@ -1,0 +1,19 @@
+<app-header-bar title="Input Builder"></app-header-bar>
+  
+  <ion-content>
+      <ion-card>
+        <ion-img></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>ngScaffolding</ion-card-subtitle>
+          <ion-card-title>Input Builder</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ngs-input-builder
+            (modelUpdated)="notifyChanged($event)"
+            [inputBuilderDefinition]="inputDefinition1"
+            [inputModel]="inputModel1"></ngs-input-builder>
+        </ion-card-content>
+      </ion-card>
+      
+  </ion-content>
+  
