@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from 'ngscaffolding-models';
 import { ComponentsModule } from '../../modules/componentsModule/components.module';
+import { InputBuilderMobileModule } from 'ngscaffolding-inputbuilder-mobile';
 
 import { AuthoriseRoleGuard, AppSettingsService, MenuService, LoggingService, ReferenceValuesService, VersionsService } from 'ngscaffolding-core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ComponentsModule, RouterModule.forChild(appRoutes)],
+  imports: [CommonModule, ComponentsModule, InputBuilderMobileModule, RouterModule.forChild(appRoutes)],
   declarations: [],
   exports: [],
   providers: [Geolocation, Network]
@@ -33,7 +34,7 @@ export class FieldForceModule {
   }
 
   constructor(appSettingsService: AppSettingsService, menuService: MenuService, logger: LoggingService, referenceValuesService: ReferenceValuesService, versions: VersionsService) {
-    logger.info('Setting Values FieldForceApp.startup');
+    logger.info('Setting Values Field ForceApp.startup');
 
     versions.addVersion('fieldforceMobile', VERSION.version, true);
 
