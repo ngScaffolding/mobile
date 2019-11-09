@@ -33,7 +33,7 @@ export class FieldForceModule {
   }
 
   constructor(appSettingsService: AppSettingsService, menuService: MenuService, logger: LoggingService, referenceValuesService: ReferenceValuesService, versions: VersionsService) {
-    logger.info('Setting Values', 'FieldForceApp.startup');
+    logger.info('Setting Values FieldForceApp.startup');
 
     versions.addVersion('fieldforceMobile', VERSION.version, true);
 

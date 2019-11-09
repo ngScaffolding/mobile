@@ -51,6 +51,8 @@ export class InputDetail {
 
   readonly?: boolean;
 
+  // default value
+  // date: today, tomorrow, yesterday
   value?: any;
 
   validateRequired?: string; // Providing a message here infer Required
@@ -76,6 +78,10 @@ export class InputDetail {
 
 export class InputDetailTextBox extends InputDetail {
   mask?: string; // 999-999
+}
+
+export class InputDetailDateTime extends InputDetail {
+  forceUTC: boolean;
 }
 
 export class InputDetailReferenceValues extends InputDetail {

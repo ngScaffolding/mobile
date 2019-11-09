@@ -100,7 +100,7 @@ export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
 })
 export class AppModule {
   constructor(appSettingsService: AppSettingsService, logger: LoggingService, menuService: MenuService) {
-    logger.info('Setting Values', 'ngScaffolding-mobile startup');
+    logger.info('Setting Values ngScaffolding-mobile startup');
 
     appSettingsService.setValue(AppSettings.title, 'ngScaffolding Mobile');
     appSettingsService.setValue(AppSettings.isMobile, true);

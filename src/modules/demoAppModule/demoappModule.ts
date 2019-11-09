@@ -43,7 +43,7 @@ export class DemoAppModule {
     referenceValuesService: ReferenceValuesService,
     versions: VersionsService
   ) {
-    logger.info('Setting Values', 'demoApp.startup');
+    logger.info('Setting Values demoApp.startup');
 
     versions.addVersion('@ngscaffolding/demoappMobile', VERSION.version, true);
 
