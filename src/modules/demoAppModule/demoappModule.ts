@@ -85,29 +85,7 @@ export class DemoAppModule {
         name: 'input.builder.simple',
         label: 'Input Builder',
         icon: 'brush',
-        routerLink: 'inputbuildersimple'
-      },
-      {
-        name: 'users.test',
-        label: 'Users Test',
-        icon: 'brush',
-        routerLink: 'users/userdetails'
-      },
-      {
-        label: 'DataGrid Samples',
-        items: [
-          {
-            label: 'Data Grid Test',
-            icon: 'grid',
-            routerLink: 'datagridtest'
-          }
-        ]
-      },
-      {
-        label: 'Input Builder (Simple)',
-        items: [
-
-        ]
+        routerLink: 'demoinput'
       }
     ]);
   }

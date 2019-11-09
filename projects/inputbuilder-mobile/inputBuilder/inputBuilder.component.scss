@@ -1,9 +1,7 @@
 .small-label{
-    font-size: 12px;
 }
 
 .textInput{
-  width: 100%;
 }
 
 .textArea{
@@ -12,27 +10,25 @@
 
 .dropdownInput{
 
-  display: block;
 }
 
 .helpIcon{
 }
 
 .switch-label{
-  margin-left: 16px;
 }
 
 .inlineInputs{
-  padding: 0px 3px 0px 0px !important;
 }
 
 .multi-select {
-  width: 100%;
 }
 
 .button-line {
 }
 .button-container {
-  display: inline;
-  margin-left: 6px;
+}
+
+.invalid {
+  border: 1px solid #ea6153;
 }
