@@ -11,9 +11,9 @@ export class DemoInputComponent {
     orientation: OrientationValues.Horizontal,
     columnCount: 3,
     okButtonText: 'Save Me',
-    okButtonIcon: 'ui-icon-check',
+    okButtonIcon: 'checkmark',
     cancelButtonText: 'Cancel Me',
-    cancelButtonIcon: 'ui-icon-clear',
+    cancelButtonIcon: 'close',
 
     customButtonText: 'Custom Here',
     customButtonIcon: 'fa-check',

@@ -130,17 +130,27 @@
       </ion-list>
     </div>
 
-    <!-- [className]="controlStyle" -->
-    <ion-item class="button-line" class="ui-g-12" *ngIf="inputBuilderDefinition.customButtonText || inputBuilderDefinition.cancelButtonText || inputBuilderDefinition.okButtonText">
-      <div class="button-container ui-g-4" *ngIf="inputBuilderDefinition.customButtonText">
-        <!-- <button type="button" (click)="onCustom()" class="ui-button-info" icon="{{ inputBuilderDefinition.customButtonIcon }}" iconPos="left" label="{{ inputBuilderDefinition.customButtonText }}"></button> -->
-      </div>
-      <div class="button-container ui-g-4" *ngIf="inputBuilderDefinition.cancelButtonText">
-        <!-- <button type="button" (click)="onCancel()" class="ui-button-warning" icon="{{ inputBuilderDefinition.cancelButtonIcon }}" iconPos="left" label="{{ inputBuilderDefinition.cancelButtonText }}"></button> -->
-      </div>
-      <div class="button-container ui-g-4" *ngIf="inputBuilderDefinition.okButtonText">
-        <!-- <button type="submit" class="ui-button-success" icon="{{ inputBuilderDefinition.okButtonIcon }}" iconPos="left" label="{{ inputBuilderDefinition.okButtonText }}"></button> -->
-      </div>
-    </ion-item>
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col> -->
+          <div *ngIf="inputBuilderDefinition.cancelButtonText">
+            <div class="ion-padding"></div>
+            <ion-button color="warning" expand="block" (click)="onCancel()">
+              <ion-icon slot="start" [name]="inputBuilderDefinition.cancelButtonIcon"></ion-icon>
+              {{ inputBuilderDefinition.cancelButtonText }}
+            </ion-button>
+          </div>
+        <!-- </ion-col>
+        <ion-col> -->
+          <div *ngIf="inputBuilderDefinition.okButtonText">
+            <div class="ion-padding"></div>
+              <ion-button color="success" expand="block" (click)="onSubmit()">
+                  <ion-icon slot="start" [name]="inputBuilderDefinition.okButtonIcon"></ion-icon>
+                  {{ inputBuilderDefinition.okButtonText }}
+                </ion-button>
+          </div>
+        <!-- </ion-col>
+      </ion-row>
+    </ion-grid> -->
   </form>
 </ion-list>
