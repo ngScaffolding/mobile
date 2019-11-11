@@ -5,12 +5,12 @@
   <ion-card-content>
     <ion-searchbar (ionChange)="updateFilter(filterValue)" [(ngModel)]="filterValue" showCancelButton="focus"></ion-searchbar>
 
-    <ion-button *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
+    <ion-button size="large"  *ngIf="selectedAsset" (click)="sendAsset()" expand="block" color="primary">
       <ion-icon name="send"></ion-icon>
       {{ 'Send Update' | translate }}
     </ion-button>
 
-    <ion-radio-group style="height: 400px; overflow: auto;" [(ngModel)]="selectedAsset">
+    <ion-radio-group [(ngModel)]="selectedAsset">
       <ion-list-header>
         <ion-label>{{ 'Shipped Assets' | translate }}</ion-label>
       </ion-list-header>

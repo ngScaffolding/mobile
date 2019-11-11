@@ -21,15 +21,15 @@ import { SuperTabsModule } from '@ionic-super-tabs/angular';
         children: [
           {
               path: 'details',
-              loadChildren: () => import('../workItemTop/workItemTop.module').then(m => m.WorkItemTopPageModule)
+              loadChildren: '../workItemTop/workItemTop.module#WorkItemTopPageModule'
           },
           {
               path: 'record',
-              loadChildren: () => import('../workItemInputs/workItemInputs.module').then(m => m.WorkItemInputsPageModule)
+              loadChildren: '../workItemInputs/workItemInputs.module#WorkItemInputsPageModule'
           },
           {
               path: 'update',
-              loadChildren: () => import('../workItemUpdate/workItemUpdate.module').then(m => m.WorkItemUpdatePageModule)
+              loadChildren: '../workItemUpdate/workItemUpdate.module#WorkItemUpdatePageModule'
           }
       ]
       },

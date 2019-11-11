@@ -48,8 +48,9 @@ export class LogonPage {
     const update: Partial<UIState> = { logonRememberMe: event.detail.checked };
     if (!update.logonRememberMe) {
       update.logonUserID = null;
+    } else {
+      this.uiStateStore.update({ logonUserID: this.inputModel.username });
     }
-    this.uiStateStore.update(update);
   }
 
   userNameChanged(event: any) {

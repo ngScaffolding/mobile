@@ -17,8 +17,8 @@ import {
 } from 'ngscaffolding-core';
 
 const appRoutes: Routes = [
-  { path: 'home', loadChildren: () => import('./pages/landing/demoLanding.module').then(m => m.DemoLandingPageModule), canActivate: [AuthoriseRoleGuard] },
-  { path: 'demoinput', loadChildren: () => import('./pages/demoInput/demoInput.module').then(m => m.DemoInputPageModule)}
+  { path: 'home', loadChildren: './pages/landing/demoLanding.module#DemoLandingPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'demoinput', loadChildren: './pages/demoInput/demoInput.module#DemoInputPageModule'}
 ];
 
 @NgModule({
