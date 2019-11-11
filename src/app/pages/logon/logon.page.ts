@@ -49,8 +49,9 @@ export class LogonPage {
     if (!update.logonRememberMe) {
       update.logonUserID = null;
     } else {
-      this.uiStateStore.update({ logonUserID: this.inputModel.username });
+      update.logonUserID = this.inputModel.username;
     }
+    this.uiStateStore.update(update);
   }
 
   userNameChanged(event: any) {
