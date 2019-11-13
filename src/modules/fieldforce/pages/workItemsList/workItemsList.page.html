@@ -20,7 +20,6 @@
       </ion-label>
       <ion-badge mode="ios" slot="end" color="primary">{{ (workItems$ | async).length }}</ion-badge>
     </ion-item>
-
     <ion-item>
       <ion-label>{{ 'Show Completed' | translate }}</ion-label>
       <ion-toggle [(ngModel)]="showCompleted" (ionChange)="updateDisplayList()"></ion-toggle>

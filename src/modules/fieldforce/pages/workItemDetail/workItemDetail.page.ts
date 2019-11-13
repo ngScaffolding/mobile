@@ -13,6 +13,7 @@ import { WorkItemsStore } from '../../services/workItems/workItems.store';
   templateUrl: 'workItemDetail.page.html',
   styleUrls: ['workItemDetail.page.scss']
 })
+
 export class WorkItemDetailPage {
-  constructor() {}
+
 }
