@@ -16,8 +16,7 @@ import { MenuQuery } from './menu.query';
   providedIn: 'root'
 })
 export class MenuService {
-  private className = 'core.MenuService';
-
+  private readonly methodName = 'MenuService';
   private masterListMenu: Array<CoreMenuItem> = [];
   private routes: Array<Route> = [];
 
@@ -28,25 +27,58 @@ export class MenuService {
   public routeSubject = new BehaviorSubject<Array<Route>>(this.routes);
 
   private httpInFlight = false;
+  private lockCount = 0;
   private menuDownloaded = false;
 
-  constructor(private http: HttpClient, private menuStore: MenuStore, private menuQuery: MenuQuery, private appSettingsQuery: AppSettingsQuery, private authQuery: UserAuthenticationQuery, private log: LoggingService, public rolesService: RolesService) {
+  constructor(
+    private http: HttpClient,
+    private menuStore: MenuStore,
+    private menuQuery: MenuQuery,
+    private appSettingsQuery: AppSettingsQuery,
+    private authQuery: UserAuthenticationQuery,
+    private log: LoggingService,
+    public rolesService: RolesService
+  ) {
     // Wait for settings, then load from server
-    combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome)]).subscribe(([authenticated, apiHome]) => {
-      if (authenticated && apiHome && !this.menuDownloaded) {
-        this.apiHome = apiHome.value;
-        if (!this.httpInFlight) {
-          this.downloadMenuItems();
+    combineLatest([this.authQuery.authenticated$, this.appSettingsQuery.selectEntity(AppSettings.apiHome), this.appSettingsQuery.selectEntity(AppSettings.isMobile)]).subscribe(
+      ([authenticated, apiHome, isMobile]) => {
+        if (authenticated && apiHome && isMobile && !this.menuDownloaded) {
+          this.apiHome = apiHome.value;
+          if (!this.httpInFlight) {
+            this.downloadMenuItems(isMobile.value || false);
+          }
         }
       }
-    });
+    );
+  }
+
+  private addLock() {
+    this.lockCount++;
+    this.log.info(`MENU Service: Locks on Loading`, this.methodName, this.lockCount);
+    this.menuStore.setLoading(true);
+  }
+
+  private removeLock() {
+    this.lockCount--;
+    this.log.info(`MENU Service: Locks on Loading`, this.methodName, this.lockCount);
+
+    if (this.lockCount === 0) {
+      this.menuStore.setLoading(false);
+    }
   }
 
   public addMenuItemsFromCode(menuItems: CoreMenuItem[], roles: string[] = null) {
-    this.log.info(`Adding MenuItems ${JSON.stringify(menuItems)}`, this.className);
+    this.addLock();
+    this.log.info('Adding MenuItems menuItems', this.methodName, menuItems);
 
-    // Save for later use
-    this.addMenuItems(menuItems);
+    // Wait till user authorised
+    this.authQuery.authenticated$.subscribe(authorised => {
+      if (authorised) {
+        // Save for later use
+        this.addMenuItems(menuItems);
+        this.removeLock();
+      }
+    });
   }
 
   public delete(menuItem: CoreMenuItem): Observable<any> {
@@ -128,16 +160,19 @@ export class MenuService {
     });
   }
 
-  private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]) {
+  private removeUnauthorisedMenuItems(menuItems: CoreMenuItem[]): CoreMenuItem[] {
     const user = this.authQuery.getValue();
     let userRoles: string[] = [];
     if (user && user.userDetails) {
       userRoles = user.userDetails.roles;
     }
 
-    const removingMenus: number[] = [];
+    const removingMenus: string[] = [];
+    let returnMenus: CoreMenuItem[] = JSON.parse(JSON.stringify(menuItems));
 
-    menuItems.forEach(menuItem => {
+    for (let menuIndex = 0; menuIndex < returnMenus.length; menuIndex++) {
+      const menuItem = returnMenus[menuIndex];
+
       let removingThis = false;
 
       // makes sure roles is array
@@ -156,56 +191,47 @@ export class MenuService {
         if (userRoles && checkingRoles.filter(allowedRole => userRoles.indexOf(allowedRole) !== -1).length === 0) {
           // No Authority. Remove
           removingThis = true;
-          removingMenus.push(menuItems.indexOf(menuItem));
+          removingMenus.push(menuItem.name);
         }
       }
+
       if (!removingThis && menuItem.items) {
-        this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
+        menuItem.items = this.removeUnauthorisedMenuItems(menuItem.items as CoreMenuItem[]);
       }
-    });
-    removingMenus.forEach(removeMenu => {
-      menuItems.splice(removeMenu, 1);
-    });
+    }
+
+    if (removingMenus.length > 0) {
+      returnMenus = menuItems.filter(menu => removingMenus.findIndex(remove => remove === menu.name) === -1);
+    }
+
+    return returnMenus;
   }
 
-  public downloadMenuItems() {
+  public downloadMenuItems(isMobile: boolean) {
     // Mark loading status
-    this.menuStore.setLoading(true);
+    this.addLock();
     this.httpInFlight = true;
 
     const newMenuItems: CoreMenuItem[] = [];
 
-    // // First Add Menu Items Added from Code
-    // if (this.menuItemsFromCode) {
-    //   const clonedFromCode = JSON.parse(JSON.stringify(this.menuItemsFromCode));
-    //       this.removeUnauthorisedMenuItems(clonedFromCode);
-
-    //       // Add to flat reference List
-    //       this.addMenuItemsToReferenceList(clonedFromCode);
-
-    //       clonedFromCode.forEach(loopMenuItem => {
-    //         this.addNewMenuItemToEntities(newMenuItems, loopMenuItem);
-    //       });
-    // }
-
     this.http
-      .get<Array<CoreMenuItem>>(this.apiHome + '/api/v1/menuitems')
+      .get<Array<CoreMenuItem>>(`${this.apiHome}/api/v1/menuitems?mobile=${isMobile}`)
       .pipe(
         timeout(20000),
         finalize(() => {
-          this.menuStore.setLoading(false);
           this.httpInFlight = false;
+          this.removeLock();
         })
       )
       .subscribe(
         downloadedMenuItems => {
-          this.log.info(`Downloaded MenuItems`, this.className);
+          this.log.info(`Downloaded MenuItems`);
           this.menuDownloaded = true;
 
           this.addMenuItems(downloadedMenuItems);
         },
         err => {
-          this.log.error('Failed to download Menu', this.className);
+          this.log.error('Failed to download Menu');
         }
       );
   }
@@ -229,13 +255,13 @@ export class MenuService {
     // });
 
     // Remove the unatuhorised
-    this.removeUnauthorisedMenuItems(this.menuItems);
+    this.menuItems = this.removeUnauthorisedMenuItems(this.menuItems);
 
     this.menuStore.update({ menuItems: this.menuItems });
   }
 
   public addRoute(route: Route, roles: string[] = null) {
-    this.log.info(`Adding Route ${JSON.stringify(route)}`, this.className);
+    this.log.info(`Adding Route ${JSON.stringify(route)}`);
     this.routes.push(route);
     this.routeSubject.next(this.routes);
 

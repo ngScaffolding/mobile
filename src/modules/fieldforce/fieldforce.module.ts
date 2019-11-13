@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppSettings } from 'ngscaffolding-models';
 import { ComponentsModule } from '../../modules/componentsModule/components.module';
+import { InputBuilderMobileModule } from 'ngscaffolding-inputbuilder-mobile';
 
 import { AuthoriseRoleGuard, AppSettingsService, MenuService, LoggingService, ReferenceValuesService, VersionsService } from 'ngscaffolding-core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -14,12 +15,13 @@ import { Network } from '@ionic-native/network/ngx';
 const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/home.module#HomePageModule', canActivate: [AuthoriseRoleGuard] },
   { path: 'sendupdate', loadChildren: './pages/sendUpdate/send-update.module#SendUpdatePageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitemdetail/:id', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] }
+  { path: 'workitemdetail', loadChildren: './pages/workItemDetail/workItemDetail.module#WorkItemDetailPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'workitems', loadChildren: './pages/workItemsList/workItemsList.module#WorkItemsListPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'supportfieldforce', loadChildren: './pages/supportFieldForce/supportFieldForce.module#SupportFieldForcePageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({
-  imports: [CommonModule, ComponentsModule, RouterModule.forChild(appRoutes)],
+  imports: [CommonModule, ComponentsModule, InputBuilderMobileModule, RouterModule.forChild(appRoutes)],
   declarations: [],
   exports: [],
   providers: [Geolocation, Network]
@@ -32,18 +34,19 @@ export class FieldForceModule {
   }
 
   constructor(appSettingsService: AppSettingsService, menuService: MenuService, logger: LoggingService, referenceValuesService: ReferenceValuesService, versions: VersionsService) {
-    logger.info('Setting Values', 'FieldForceApp.startup');
+    logger.info('Setting Values Field ForceApp.startup');
 
     versions.addVersion('fieldforceMobile', VERSION.version, true);
 
     appSettingsService.setValue(AppSettings.title, 'FieldForce');
     appSettingsService.setValue(AppSettings.iconUrl, '');
 
-    // appSettingsService.setValue(AppSettings.apiHome, 'https://tesamm-api.azurewebsites.net');
-    // appSettingsService.setValue(AppSettings.apiAuth, 'https://tesamm-oauth.azurewebsites.net');
+    appSettingsService.setValue(AppSettings.apiHome, 'https://tesamm-api.azurewebsites.net');
+    appSettingsService.setValue(AppSettings.apiAuth, 'https://tesamm-oauth.azurewebsites.net');
 
-    appSettingsService.setValue(AppSettings.apiHome, 'http://localhost:3000');
-    appSettingsService.setValue(AppSettings.apiAuth, 'http://localhost:3010');
+    // appSettingsService.setValue(AppSettings.apiHome, 'http://localhost:3000');
+    // appSettingsService.setValue(AppSettings.apiAuth, 'http://localhost:3010');
+
 
     appSettingsService.setValue(AppSettings.authTokenEndpoint, '/auth/token');
     appSettingsService.setValue(AppSettings.errorLogConsole, true);
@@ -73,6 +76,25 @@ export class FieldForceModule {
       'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.'
     );
 
-    // menuService.addMenuItemsFromCode([]);
+    menuService.addMenuItemsFromCode([
+      {
+        label: 'Home',
+        icon: 'home',
+        routerLink: 'home',
+        order: 100
+      },
+      {
+        label: 'Work Items',
+        icon: 'build',
+        routerLink: 'workitems',
+        order: 150
+      },
+      {
+        label: 'FF Support',
+        icon: 'settings',
+        routerLink: 'supportfieldforce',
+        order: 800
+      }
+    ]);
   }
 }

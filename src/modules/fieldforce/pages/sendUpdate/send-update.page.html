@@ -22,7 +22,7 @@
     <ion-item>
       <ion-label position="floating">{{ 'Engineer Update' | translate }}</ion-label>
 
-      <ion-select [(ngModel)]="notificationStatus" interface="popover">
+      <ion-select [(ngModel)]="notificationStatus" interface="action-sheet">
         <ion-select-option *ngFor="let notification of notifications.referenceValueItems" [value]="notification.value">{{ notification.display }} </ion-select-option>
       </ion-select>
     </ion-item>

@@ -8,11 +8,11 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full', canActivate: [AuthoriseRoleGuard]
   },
-  { path: 'login', loadChildren: './logon/logon.module#LogonPageModule' },
-  { path: 'logoff', loadChildren: './logoff/logoff.module#LogoffPageModule' },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthoriseRoleGuard] },
-  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule', canActivate: [AuthoriseRoleGuard] }
+  { path: 'login', loadChildren: './pages/logon/logon.module#LogonPageModule' },
+  { path: 'logoff', loadChildren: './pages/logoff/logoff.module#LogoffPageModule' },
+  { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule', canActivate: [AuthoriseRoleGuard] }
 ];
 
 @NgModule({

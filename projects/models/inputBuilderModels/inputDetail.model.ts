@@ -1,32 +1,9 @@
 import { ReferenceValueItem } from '../coreModels';
 
-export class baseInput{
+export class BaseInput {
   name?: string;
   label?: string;
   type?: InputTypes;
-}
-
-export class testInput extends baseInput {
- textValue: string;
-}
-
-export function build () {
-  var array: baseInput[];
-
-  array = new  Array<baseInput>();
-
-  var base = new baseInput();
-  var test = new testInput();
-
-  array.push(base);
-  array.push(test);
-
-  array.forEach(arr=>{
-    console.log(arr.name);
-  if(arr instanceof testInput){
-    console.log((<testInput>arr).textValue);
-  }
-});
 }
 
 export enum InputTypes {
@@ -37,7 +14,6 @@ export enum InputTypes {
   password = 'password',
   textarea = 'textarea',
   datetime = 'datetime',
-  datetimeUTC = 'datetimeUTC',
   date = 'date',
   time = 'time',
   select = 'select',
@@ -58,7 +34,8 @@ export enum InputTypes {
   autocomplete = 'autocomplete',
   multiselect = 'multiselect',
   chips = 'chips',
-  keyfilter = 'keyfilter'
+  keyfilter = 'keyfilter',
+  fileattach = 'fileattach'
 }
 export class InputDetail {
   name?: string;
@@ -74,6 +51,8 @@ export class InputDetail {
 
   readonly?: boolean;
 
+  // default value
+  // date: today, tomorrow, yesterday
   value?: any;
 
   validateRequired?: string; // Providing a message here infer Required
@@ -101,6 +80,10 @@ export class InputDetailTextBox extends InputDetail {
   mask?: string; // 999-999
 }
 
+export class InputDetailDateTime extends InputDetail {
+  forceUTC: boolean;
+}
+
 export class InputDetailReferenceValues extends InputDetail {
   referenceValueName?: string; // Used for select items
   referenceValueSeedName?: string; // set to name, when changed use this value in search
@@ -115,15 +98,20 @@ export class InputDetailDropdown extends InputDetailReferenceValues {
   selectFilterPlaceholder?: string; // Placeholder for Filter input
 }
 
-export class InputDetailToggleButton extends InputDetail{
-
-}
-export class InputDetailTextArea extends InputDetail{
+export class InputDetailToggleButton extends InputDetail {}
+export class InputDetailTextArea extends InputDetail {
   rows?: number; // Rows for TextArea
 }
 
-export class InputDetailSlider extends InputDetail{
+export class InputDetailSlider extends InputDetail {
   min?: number;
   max?: number;
   step?: number;
+}
+
+export class FileAttach extends InputDetail {
+  // Pattern to restrict the allowed file types such as "image/*".
+  accept: string;
+  // Maximum file size allowed in bytes.
+  maxFileSize: number;
 }

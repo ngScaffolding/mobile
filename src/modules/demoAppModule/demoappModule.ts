@@ -18,6 +18,7 @@ import {
 
 const appRoutes: Routes = [
   { path: 'home', loadChildren: './pages/landing/demoLanding.module#DemoLandingPageModule', canActivate: [AuthoriseRoleGuard] },
+  { path: 'demoinput', loadChildren: './pages/demoInput/demoInput.module#DemoInputPageModule'}
 ];
 
 @NgModule({
@@ -43,7 +44,7 @@ export class DemoAppModule {
     referenceValuesService: ReferenceValuesService,
     versions: VersionsService
   ) {
-    logger.info('Setting Values', 'demoApp.startup');
+    logger.info('Setting Values demoApp.startup');
 
     versions.addVersion('@ngscaffolding/demoappMobile', VERSION.version, true);
 
@@ -84,29 +85,7 @@ export class DemoAppModule {
         name: 'input.builder.simple',
         label: 'Input Builder',
         icon: 'brush',
-        routerLink: 'inputbuildersimple'
-      },
-      {
-        name: 'users.test',
-        label: 'Users Test',
-        icon: 'brush',
-        routerLink: 'users/userdetails'
-      },
-      {
-        label: 'DataGrid Samples',
-        items: [
-          {
-            label: 'Data Grid Test',
-            icon: 'grid',
-            routerLink: 'datagridtest'
-          }
-        ]
-      },
-      {
-        label: 'Input Builder (Simple)',
-        items: [
-
-        ]
+        routerLink: 'demoinput'
       }
     ]);
   }

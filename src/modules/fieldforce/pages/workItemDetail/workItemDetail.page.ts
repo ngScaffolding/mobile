@@ -7,79 +7,13 @@ import { WorkItemsQuery } from '../../services/workItems/workItems.query';
 import { WorkItem } from '../../models';
 import { WorkItemsService } from '../../services/workItems/workItems.service';
 import { NotificationService } from '../../../../app/services/notification/notification.service';
+import { WorkItemsStore } from '../../services/workItems/workItems.store';
 
 @Component({
   templateUrl: 'workItemDetail.page.html',
   styleUrls: ['workItemDetail.page.scss']
 })
-export class WorkItemDetailPage implements OnInit {
-  workItem: WorkItem;
 
-  updateStages$: Observable<ReferenceValue>;
-  fullUpdateCodes: ReferenceValueItem[];
-  updateCodes: ReferenceValueItem[];
-  updateStatus: any;
-  updateStatus2: any;
-  updateComment: string;
+export class WorkItemDetailPage {
 
-  filterValue: string;
-  selectedAsset: string;
-
-  shippedAssetsFull: ReferenceValueItem[];
-  shippedAssets: ReferenceValueItem[];
-
-  ngOnInit(): void {
-    this.workItem = this.workItemsQuery.getEntity(this.route.snapshot.params.id);
-    this.updateStages$ = this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateStages.Reference');
-    this.refValuesService.getReferenceValue('FieldForce.WorkItemUpdateCodes.Reference').subscribe(refVal => {
-      this.fullUpdateCodes = refVal.referenceValueItems;
-    });
-
-    this.refValuesService.getReferenceValue('FieldForce.ShippedAssets.Reference').subscribe(refVal => {
-      this.shippedAssetsFull = refVal.referenceValueItems;
-      this.shippedAssets = refVal.referenceValueItems;
-    });
-  }
-
-  statusChanged($event: any) {
-    // tslint:disable-next-line: triple-equals
-    this.updateStatus2 = null;
-    this.updateCodes = this.fullUpdateCodes.filter(c => c.subtitle == this.updateStatus);
-  }
-
-  sendUpdate() {
-    this.workItemsService.sendUpdate(this.workItem.WorkItemID, this.updateStatus2, this.updateComment);
-
-    setTimeout(_ => {
-      this.notification.showMessage({
-        summary: 'Update',
-        detail: 'Update Details Sent',
-        severity: 'success'
-      });
-    }, 500);
-  }
-
-  sendAsset() {
-    this.workItemsService.sendAdditionalValues(this.workItem.WorkItemID, {AssetTag: this.selectedAsset});
-
-        setTimeout(_ => {
-      this.notification.showMessage({
-        summary: 'Asset Update',
-        detail: 'Asset Details Sent',
-        severity: 'success'
-      });
-    }, 500);
-  }
-
-  updateFilter(filterValue: string) {
-    this.shippedAssets = this.shippedAssetsFull.filter(asset => asset.value.toUpperCase().startsWith(this.filterValue.toUpperCase()));
-  }
-
-  constructor(
-    private notification: NotificationService,
-    private refValuesService: ReferenceValuesService,
-    private route: ActivatedRoute,
-    private workItemsQuery: WorkItemsQuery,
-    private workItemsService: WorkItemsService
-  ) {}
 }

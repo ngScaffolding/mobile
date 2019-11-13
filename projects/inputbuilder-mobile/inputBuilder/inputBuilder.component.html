@@ -1,0 +1,156 @@
+<ion-list lines="full">
+  <form novalidate *ngIf="formBuilt && inputBuilderDefinition && inputBuilderDefinition.inputDetails" (ngSubmit)="onSubmit(form)" [formGroup]="form">
+    <div *ngFor="let input of inputBuilderDefinition.inputDetails">
+      <ion-item>
+        <div [ngSwitch]="input.type">
+          <!-- null === Blank -->
+          <div *ngSwitchCase="'null'"></div>
+
+          <!-- textbox -->
+          <div *ngSwitchCase="'textbox'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <ion-input class="textInput" type="text" [formControlName]="input.name" [id]="input.name"></ion-input>
+          </div>
+
+          <!-- password -->
+          <div *ngSwitchCase="'password'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <ion-input class="textInput" type="password" [formControlName]="input.name" [id]="input.name"></ion-input>
+          </div>
+
+          <!-- email -->
+          <div *ngSwitchCase="'email'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <ion-input class="textInput" type="email" [formControlName]="input.name" [id]="input.name"></ion-input>
+          </div>
+
+          <!-- slider -->
+          <div *ngSwitchCase="'slider'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-slider [formControlName]="input.name" [id]="input.name" [min]="input.min" [max]="input.max" [step]="input.step"></p-slider> -->
+          </div>
+
+          <!-- Spinner -->
+          <div *ngSwitchCase="'spinner'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-spinner [id]="input.name" [min]="input.min" [max]="input.max" [formControl]="form.controls[input.name]"></p-spinner> -->
+          </div>
+
+          <!-- TextArea -->
+          <div *ngSwitchCase="'textarea'">
+            <textarea class="textInput" [disabled]="input.readonly" [rows]="input.rows" [placeholder]="input.label" area [formControlName]="input.name"></textarea>
+          </div>
+
+          <!-- Checkbox -->
+          <div *ngSwitchCase="'checkbox'">
+            <!-- <p-checkbox binary="true" [label]="input.label" [disabled]="input.readonly" [id]="input.name" [formControl]="form.controls[input.name]"> </p-checkbox> -->
+          </div>
+
+          <!-- Simple DropDown -->
+          <div *ngSwitchCase="'dropdown'">
+            <ion-label class="small-label">{{ getLabel(input) }}</ion-label>
+            <!-- <p-dropdown appendTo="body" class="dropdownInput" [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter" dataKey="value" optionLabel="display" [formControlName]="input.name"></p-dropdown> -->
+          </div>
+
+          <!-- DropDown Returns Object -->
+          <div *ngSwitchCase="'dropdownobject'">
+            <ion-label class="small-label">{{ getLabel(input) }}</ion-label>
+            <!-- <p-dropdown appendTo="body" class="dropdownInput" [id]="input.name" [options]="dataSourceLookup[input.name]" [autoWidth]="false" [filter]="input.selectFilter" optionLabel="display" [formControlName]="input.name"></p-dropdown> -->
+          </div>
+
+          <!-- InputSwitch -->
+          <div *ngSwitchCase="'switch'">
+            <ion-label class="switch-label">{{ getLabel(input) }}</ion-label>
+            <!-- <p-inputSwitch [id]="input.name" [formControlName]="input.name"> </p-inputSwitch> -->
+          </div>
+
+          <!-- DateTime -->
+          <div *ngSwitchCase="'datetime'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-calendar appendTo="body" [disabled]="input.readonly" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true" hourFormat="24" [formControlName]="input.name" [id]="input.name"> -->
+            <!-- </p-calendar> -->
+          </div>
+
+          <!-- DateTime UTC -->
+          <div *ngSwitchCase="'datetimeUTC'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-calendar appendTo="body" [disabled]="input.readonly" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" showTime="true" hourFormat="24" [formControlName]="input.name" [id]="input.name"> -->
+            <!-- </p-calendar> -->
+          </div>
+
+          <!-- Date -->
+          <div *ngSwitchCase="'date'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-calendar appendTo="body" [disabled]="input.readonly" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [dateFormat]="appSettings.getString('inputDateFormat') | async" [formControlName]="input.name" [id]="input.name"> </p-calendar> -->
+          </div>
+
+          <!-- Time -->
+          <div *ngSwitchCase="'time'">
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <!-- <p-calendar appendTo="body" [disabled]="input.readonly" timeOnly="true" showTime="true" hourFormat="24" [showIcon]="appSettings.getBoolean('inputShowCalendarIcon') | async" [formControlName]="input.name" [id]="input.name"> </p-calendar> -->
+          </div>
+
+          <!-- File Attachment -->
+          <div *ngSwitchCase="'fileattach'">
+            <!-- <p-fileUpload customUpload="true" [accept]="input.accept" [maxFileSize]="input.maxFileSize" chooseLabel="{{ 'Choose File' | translate }}" auto="true" (uploadHandler)="attachFiles($event)"></p-fileUpload> -->
+          </div>
+
+          <!-- DEFUALT textbox -->
+          <div *ngSwitchDefault>
+            <ion-label position="floating">{{ getLabel(input) }}</ion-label>
+            <ion-input type="text" [formControlName]="input.name" [id]="input.name"></ion-input>
+          </div>
+        </div>
+
+        <!-- Help text here -->
+        <div *ngIf="input.help" class="ui-g-1">
+          <!-- <i class="fa ui-icon-info helpIcon" pTooltip="{{ input.help }}" tooltipPosition="bottom"></i> -->
+        </div>
+      </ion-item>
+
+      <ion-list lines="full" class="ui-message ui-messages-error ui-corner-all" *ngIf="form.get(input.name)?.invalid && (form.get(input.name)?.dirty || form.get(input.name)?.touched || formSubmitted)">
+        <ion-label *ngIf="form.get(input.name).errors.required">
+          {{ input.validateRequired }}
+        </ion-label>
+        <ion-label *ngIf="form.get(input.name).errors.requiredTrue">
+          {{ input.validateRequiredTrue }}
+        </ion-label>
+        <ion-label *ngIf="form.get(input.name).errors.email">
+          {{ input.validateEmail }}
+        </ion-label>
+        <ion-label *ngIf="form.get(input.name).errors.pattern">
+          {{ input.validatePatternMessage }}
+        </ion-label>
+        <ion-label *ngIf="form.get(input.name).errors.minlength">
+          {{ input.validateMinLengthMessage }}
+        </ion-label>
+        <ion-label *ngIf="form.get(input.name).errors.maxlength">
+          {{ input.validateMaxLengthMessage }}
+        </ion-label>
+      </ion-list>
+    </div>
+
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col> -->
+          <div *ngIf="inputBuilderDefinition.cancelButtonText">
+            <div class="ion-padding"></div>
+            <ion-button color="warning" expand="block" (click)="onCancel()">
+              <ion-icon slot="start" [name]="inputBuilderDefinition.cancelButtonIcon"></ion-icon>
+              {{ inputBuilderDefinition.cancelButtonText }}
+            </ion-button>
+          </div>
+        <!-- </ion-col>
+        <ion-col> -->
+          <div *ngIf="inputBuilderDefinition.okButtonText">
+            <div class="ion-padding"></div>
+              <ion-button color="success" expand="block" (click)="onSubmit()">
+                  <ion-icon slot="start" [name]="inputBuilderDefinition.okButtonIcon"></ion-icon>
+                  {{ inputBuilderDefinition.okButtonText }}
+                </ion-button>
+          </div>
+        <!-- </ion-col>
+      </ion-row>
+    </ion-grid> -->
+  </form>
+</ion-list>
