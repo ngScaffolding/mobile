@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CacheWarmService } from 'src/app/services/cacheWarm/cacheWarm.service';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss']
 })
 
-export class HomePage {}
+export class HomePage {
+  constructor(private cacheWarmService: CacheWarmService) {}
+
+  ionViewWillEnter() {
+    this.cacheWarmService.warmCache();
+  }
+}
 

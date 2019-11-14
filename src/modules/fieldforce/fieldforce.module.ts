@@ -107,23 +107,38 @@ export class FieldForceModule {
             'Demo Application Your Terms and Conditions Here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas.'
         );
 
+        appSettingsService.setValue(AppSettings.mobileCacheNames, [
+            'FieldForce.WorkItemUpdateStages.Reference',
+                'FieldForce.WorkItemUpdateCodes.Reference',
+                'FieldForce.ShippedAssets.Reference',
+                'FieldForce.Clients.Reference',
+                'FieldForce.Priorities.Reference',
+                'FieldForce.WorkItems.Types',
+                'FieldForce.WorkItems.SubTypes',
+                'FieldForce.StatusCodes.Reference',
+                'FieldForce.NotificationCodes.Reference'
+        ]);
+
         menuService.addMenuItemsFromCode([
             {
                 label: 'Home',
                 icon: 'home',
                 routerLink: 'home',
+                name: 'home',
                 order: 100
             },
             {
                 label: 'Work Items',
                 icon: 'build',
                 routerLink: 'workitems',
+                name: 'workitems',
                 order: 150
             },
             {
                 label: 'FF Support',
                 icon: 'settings',
                 routerLink: 'supportfieldforce',
+                name: 'supportfieldforce',
                 order: 800
             }
         ]);

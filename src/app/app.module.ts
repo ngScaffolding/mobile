@@ -117,18 +117,21 @@ export class AppModule {
         label: 'Change Password',
         icon: 'lock',
         routerLink: 'changepassword',
+        name: 'changepassword',
         order: 940
       },
       {
         label: 'Logoff',
         icon: 'log-out',
         routerLink: 'logoff',
+        name: 'logoff',
         order: 950
       },
       {
         label: 'About',
         icon: 'information-circle-outline',
         routerLink: 'about',
+        name: 'about',
         order: 900
       }
     ]);

@@ -12,7 +12,7 @@ import { ToastController, NavController } from '@ionic/angular';
   styleUrls: ['supportFieldForce.page.scss']
 })
 export class SupportFieldForcePage {
-  
+
   constructor(
     private alertController: AlertController,
     private toastController: ToastController,
@@ -41,16 +41,16 @@ export class SupportFieldForcePage {
             this.logger.warning('User Cleared Cache');
 
             // Clear Akita Stores
-            resetStores();
+            resetStores({exclude: ['appSettings']});
 
             const toast = this.toastController.create({
               message: this.translate.instant('Cache Cleared.'),
               duration: 2000
             });
 
-            // setTimeout(() => {
-            //   this.router.navigateByUrl('/login');
-            // }, 2100);
+            setTimeout(() => {
+              this.router.navigateByUrl('/');
+            }, 2100);
           }
         }
       ]

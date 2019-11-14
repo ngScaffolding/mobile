@@ -32,11 +32,5 @@ export const appInitialisers = [
     useFactory: startWorkItemsPolling,
     multi: true,
     deps: workItemUpdatesDependencies
-  },
-  {
-    provide: APP_INITIALIZER,
-    useFactory: warmCache,
-    multi: true,
-    deps: cacheDependencies
   }
 ];
