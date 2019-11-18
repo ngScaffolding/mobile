@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="11" id="com.essoft.fieldforcemobile" ios-CFBundleVersion="1.0.25" version="1.0.25" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>FieldForce Mobile</name>
-    <description>FieldForce Mobile Application</description>
+<widget android-versionCode="11" id="com.ngscaffolding.mobiledemo" ios-CFBundleVersion="1.0.25" version="1.0.25" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ngScaffolding Mobile</name>
+    <description>ngScaffolding Mobile Application</description>
     <author email="dbaines@es-soft.net" href="http://www.es-soft.net/">Elegant Solutions</author>
     <content src="index.html" />
     <access origin="http://*.es-soft.net" requires-forward-secrecy="false" />
