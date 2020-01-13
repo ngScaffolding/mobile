@@ -44,10 +44,10 @@ import {
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-export function jwtOptionsFactory(authQuery: UserAuthenticationQuery) {
+export function jwtOptionsFactory(authService: UserAuthenticationService) {
   return {
     tokenGetter: () => {
-      return authQuery.getValue().token;
+      return authService.getToken();
     }
   };
 }
