@@ -63,7 +63,7 @@ export class InputBuilderComponent implements OnInit, OnChanges {
 
   onCustom() {
     if (this.inputBuilderDefinition.customButtonCallBack) {
-      this.inputBuilderDefinition.customButtonCallBack();
+      this.inputBuilderDefinition.customButtonCallBack(this.clonedInputModel);
     }
   }
 

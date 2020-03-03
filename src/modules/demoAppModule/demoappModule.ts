@@ -77,6 +77,7 @@ export class DemoAppModule {
 
     menuService.addMenuItemsFromCode([
       {
+        name: 'chart.sample',
         label: 'Chart Sample',
         icon: 'grid',
             routerLink: 'charttest'
