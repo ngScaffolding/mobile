@@ -77,10 +77,10 @@ export class DemoAppModule {
 
     menuService.addMenuItemsFromCode([
       {
-        name: 'chart.sample',
         label: 'Chart Sample',
         icon: 'grid',
-            routerLink: 'charttest'
+            routerLink: 'charttest',
+            name: 'charttest'
       },
       {
         name: 'input.builder.simple',
