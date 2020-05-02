@@ -1,40 +1,68 @@
- <ion-header>
-  <ion-toolbar >
-    <ion-title>{{appSettingsQuery.getEntity('title').value}}</ion-title>
+<ion-header>
+  <ion-toolbar>
+      <ion-title>{{appSettingsQuery.getEntity('title').value}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form  #form="ngForm" (ngSubmit)="logon(form)">
-    <ion-grid>
-      <ion-row color="primary" class="ion-justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h3>{{'Login' | translate}}</h3>
-          </div>
-          <div class="ion-padding">
-            <ion-item>
-              <ion-input  name="username" type="text" placeholder="User Name" (ionChange)="userNameChanged($event)" [(ngModel)]="inputModel.username" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="inputModel.password" required></ion-input>
-            </ion-item>
-            </div>
-            <ion-item *ngIf="appSettings.getBoolean('authShowRememberMe') | async">
-              <ion-label>{{'Remember Me' | translate}}</ion-label>
-              <ion-checkbox name="rememberMe" color="primary" slot="start"
-              (ionChange)="rememberChanged($event)"  
-              [ngModel]="rememberMe"></ion-checkbox>
-            </ion-item>
+  <form #form="ngForm" (ngSubmit)="logon(form)">
+      <ion-grid>
+          <ion-row color="primary" class="ion-justify-content-center">
+              <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                  <div class="ion-text-center">
+                      <h3>{{'Login' | translate}}</h3>
+                  </div>
+                  <div class="ion-padding">
+                      <ion-item>
+                          <ion-input
+                              name="username"
+                              type="text"
+                              [placeholder]="'User Name' | translate"
+                              (ionChange)="userNameChanged($event)"
+                              [(ngModel)]="inputModel.username"
+                              required
+                          ></ion-input>
+                      </ion-item>
+                      <ion-item>
+                          <ion-input
+                              name="password"
+                              [type]="showPassword? 'text':'password'"
+                              [placeholder]="'Password' | translate"
+                              [(ngModel)]="inputModel.password"
+                              required
+                          ></ion-input>
+                          <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+                      </ion-item>
+                  </div>
+                  <ion-item *ngIf="appSettings.getBoolean('authShowRememberMe') | async">
+                      <ion-label>{{'Remember Me' | translate}}</ion-label>
+                      <ion-checkbox
+                          name="rememberMe"
+                          color="primary"
+                          slot="start"
+                          (ionChange)="rememberChanged($event)"
+                          [ngModel]="rememberMe"
+                      ></ion-checkbox>
+                  </ion-item>
 
-          <div class="ion-padding">
-            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">{{'Login' | translate}}</ion-button>
-          </div>
-          <div class="ion-padding" *ngIf="appSettings.getBoolean('authShowRegister') | async">
-            <ion-button color="secondary"  size="large" type="submit" [disabled]="form.invalid" expand="block">{{'Register' | translate}}</ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+                  <div class="ion-padding">
+                      <ion-button size="large" type="submit" [disabled]="form.invalid || spinning" expand="block"
+                          >{{'Login' | translate}}<ion-spinner *ngIf="spinning" slot="end" name="bubbles"></ion-spinner></ion-button
+                      >
+                      
+                  </div>
+                  <div class="ion-padding" *ngIf="appSettings.getBoolean('authShowRegister') | async">
+                      <ion-button
+                          color="secondary"
+                          size="large"
+                          type="submit"
+                          [disabled]="spinning"
+                          expand="block"
+                          >{{'Register' | translate}}</ion-button
+                      >
+                  </div>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
   </form>
 </ion-content>
